@@ -1,4 +1,4 @@
-import Router, { Request , Response } from 'express'
+/*import Router, { Request , Response } from 'express'
 import { createUser , loginUser} from '@expressControllers/users/users.controller';
 
 
@@ -56,3 +56,4 @@ router.post('/users/auth', async (req : Request, res : Response) => {
 
 
 export default router;
+*/

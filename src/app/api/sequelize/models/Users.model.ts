@@ -1,48 +1,66 @@
-import { DataTypes , Model  } from 'sequelize';
-import { User , UserPayload } from '@expressModels/users/users';
+import { DataTypes , Model , CreationOptional , InferCreationAttributes } from 'sequelize';
 import { getSequelizeInstance } from '@expressConfig/database';
+import { UserAttributes } from '@expressModels/users/users'
 
-class Users extends Model<User , UserPayload> {}
+class Users extends Model<UserAttributes, InferCreationAttributes<Users>> implements UserAttributes {
+  declare id_user: CreationOptional<number>;
+  declare username: string;
+  declare email: string;
+  declare password_hash: string;
+  declare readonly created_at: CreationOptional<Date>;
+  declare readonly updated_at: CreationOptional<Date>;
+  declare photo_profile_url: string | null;
+  declare is_active: boolean;
+}
+
 
 Users.init( {
-  id: {
-    type: DataTypes.INTEGER ,
-    autoIncrement: true ,
-    primaryKey: true ,
-  } ,
-  username: {
-    type: DataTypes.STRING( 50 ) ,
-    allowNull: false ,
-    unique: true ,
-  } ,
-  email: {
-    type: DataTypes.STRING( 50 ) ,
-    allowNull: false ,
-    unique: true ,
-    validate: {
-      isEmail: true
+    id_user: {
+      type: DataTypes.INTEGER ,
+      autoIncrement: true ,
+      primaryKey: true ,
+    } ,
+    username: {
+      type: DataTypes.STRING( 50 ) ,
+      allowNull: false ,
+      unique: true ,
+    } ,
+    email: {
+      type: DataTypes.STRING( 100 ) ,
+      allowNull: false ,
+      unique: true ,
+      validate: {
+        isEmail: true
+      }
+    } ,
+    password_hash: {
+      type: DataTypes.STRING( 255 ) ,
+      allowNull: false ,
+    } ,
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    } ,
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
+    photo_profile_url: {
+      type: DataTypes.STRING( 255 ) ,
+      allowNull: true ,
+    } ,
+    is_active: {
+      type: DataTypes.BOOLEAN ,
+      defaultValue: true ,
     }
-  } ,
-  password: {
-    type: DataTypes.STRING( 20 ) ,
-    allowNull: false ,
-    validate: {
-      len: [ 6 , 20 ]
-    }
-  } ,
-  created_at: {
-    type: DataTypes.STRING( 50 ) ,
-  } ,
-  active: {
-    type: DataTypes.BOOLEAN ,
-    defaultValue: true ,
+  } , {
+    sequelize: getSequelizeInstance() ,
+    modelName: 'Users' ,
+    tableName: 'users' ,
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   }
-} , {
-  sequelize: getSequelizeInstance() ,
-  modelName: 'Users' ,
-  tableName: 'users' ,
-  timestamps: false ,
-}
 )
 
 export default Users;

@@ -1,0 +1,11 @@
+import {CreationOptional} from 'sequelize';
+
+export interface MedicineAttributes {
+  id_medicine: CreationOptional<number>;
+  name: string;
+  description?: string | null;
+  price: number;
+  created_at?: Date;
+  updated_at?: Date;
+  is_active?: boolean;
+}

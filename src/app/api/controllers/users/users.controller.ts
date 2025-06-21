@@ -1,3 +1,5 @@
+/*
+
 import Users from '@sequelizeModels/Users.model';
 import {UserLoginPayload, UserPayload, UserWithToken} from '@expressModels/users/users';
 import {userSchema, userLoginSchema} from '@joiSchemas/users/users.joi';
@@ -63,3 +65,6 @@ export const loginUser = async (userLoginPayload : UserLoginPayload) : Promise<U
     return Error(DEFAULT_INTERNAL_ERROR);
   }
 }
+
+*/
+
