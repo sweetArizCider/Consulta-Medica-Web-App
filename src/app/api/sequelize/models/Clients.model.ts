@@ -8,9 +8,9 @@ class Clients extends Model<ClientAttributes, InferCreationAttributes<Clients>> 
   declare email: string;
   declare phone: string | null;
   declare address: string | null;
-  declare readonly created_at: CreationOptional<Date>;
-  declare readonly updated_at: CreationOptional<Date>;
-  declare is_active: boolean;
+  declare created_at: CreationOptional<string>;
+  declare updated_at: CreationOptional<string>;
+  declare is_active: CreationOptional<boolean>;
 }
 
 Clients.init({
@@ -33,6 +33,7 @@ Clients.init({
   },
   phone: {
     type: DataTypes.STRING(20),
+    unique: true,
     allowNull: true,
   },
   address: {
@@ -40,12 +41,10 @@ Clients.init({
     allowNull: true,
   },
   created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
   },
   updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
   },
   is_active: {
     type: DataTypes.BOOLEAN,
@@ -55,9 +54,7 @@ Clients.init({
   sequelize: getSequelizeInstance(),
   modelName: 'Clients',
   tableName: 'clients',
-  timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
+  timestamps: false
 });
 
 export default Clients;
