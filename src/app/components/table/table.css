@@ -1,0 +1,16 @@
+.column {
+  background-color: var(--mat-sys-primary) !important;
+  color: var(--mat-sys-on-primary);
+}
+
+.mat-mdc-header-cell,.mat-mdc-cell{
+  border-bottom-color: var(--mat-sys-primary) !important;
+  border-bottom: 3px solid var(--mat-sys-primary) !important;
+  font-weight: 500 !important;
+
+}
+
+table{
+  width: 100% !important;
+  height: 100% !important;
+}
