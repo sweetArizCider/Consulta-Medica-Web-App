@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavBar} from '@components/navBar/navBar';
 import { login } from '@services/auth/auth.service';
-import { saveTokenToLocalStorage } from '@app/controllers/auth/auth.controller'
-import { UserWithToken } from '@expressModels/users/users';
+import { saveTokenToLocalStorage } from '@services/auth/auth.service'
 
 @Component({
   selector: 'login-view',
