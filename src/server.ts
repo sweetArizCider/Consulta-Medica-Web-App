@@ -5,6 +5,7 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import authUsersRouter from '@expressRoutes/users/users.route'
+import clientsRouter from '@expressRoutes/clients/clients.route';
 import express from 'express';
 import { join } from 'node:path';
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use('/api', authUsersRouter );
+app.use('/api', clientsRouter)
 
 
 /**

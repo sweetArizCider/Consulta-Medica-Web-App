@@ -8,6 +8,9 @@ export const BAD_REQUEST = 'Bad request. Please check your input and try again.'
 export const NO_USER_PAYLOAD = 'No user payload provided. Please provide a valid user payload.';
 export const USER_ALREADY_EXISTS = (username : string ) => `User with username ${username} already exists. Please choose a different username.`;
 export const USER_EMAIL_ALREADY_EXISTS = (email : string ) => `User with email ${email} already exists. Please choose a different email.`;
+export const CLIENT_EMAIL_ALREADY_EXISTS = (email : string ) => `Client with email ${email} already exists. Please choose a different email.`;
+export const CLIENT_PHONE_ALREADY_EXISTS = (phone : string ) => `Client with phone ${phone} already exists. Please choose a different phone number.`;
+export const CLIENT_PHONE_OR_EMAIL_ALREADY_EXISTS = (phone : string, email : string) => `Client with phone ${phone} or email ${email} already exists. Please choose a different phone number or email.`;
 export const VALIDATION_ERROR = (errorMessage : string) => `Validation error: ${errorMessage}`;
-export const ERROR_CREATING_USER = 'Error creating user. Please try again later.';
 export const SERVER_ERROR = (errorMessage : unknown) => `Server error... Details -> ${errorMessage}`;
+export const CLIENT_NOT_FOUND = (id: number | string) => `Client with ID ${id} not found. Please check the ID and try again.`;
