@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
 import {INVALID_TOKEN_FORMAT, UNAUTHORIZED} from '@app/api/constants/errors/errors.constant';
+import { verifyJWT } from '@expressControllers/JWT/JWT.controller'
 
-const JWT_SECRET = process.env['SECRET'];
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers['authorization'];
@@ -12,16 +11,11 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
   }
 
   const token = authHeader.split(' ')[1];
-  if (!JWT_SECRET) {
-    res.status(500).json({ error: UNAUTHORIZED });
-    return
-  }
 
   try {
-    const validToken = jwt.verify(token, JWT_SECRET);
-
-    if (typeof validToken !== 'object' || !validToken) {
-      res.status(401).json({ error: UNAUTHORIZED });
+    const validToken = verifyJWT(token);
+    if (validToken instanceof Error) {
+      res.status(401).json({ error: validToken.message });
       return;
     }
     next();

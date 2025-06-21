@@ -7,10 +7,10 @@ class Users extends Model<UserAttributes, InferCreationAttributes<Users>> implem
   declare username: string;
   declare email: string;
   declare password_hash: string;
-  declare readonly created_at: CreationOptional<Date>;
-  declare readonly updated_at: CreationOptional<Date>;
+  declare created_at: CreationOptional<string>;
+  declare updated_at: CreationOptional<string>;
   declare photo_profile_url: string | null;
-  declare is_active: boolean;
+  declare is_active: CreationOptional<boolean>;
 }
 
 
@@ -38,12 +38,10 @@ Users.init( {
       allowNull: false ,
     } ,
     created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
+      type: DataTypes.STRING,
     } ,
     updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
+      type: DataTypes.STRING,
     },
     photo_profile_url: {
       type: DataTypes.STRING( 255 ) ,
@@ -57,9 +55,7 @@ Users.init( {
     sequelize: getSequelizeInstance() ,
     modelName: 'Users' ,
     tableName: 'users' ,
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    timestamps: false,
   }
 )
 

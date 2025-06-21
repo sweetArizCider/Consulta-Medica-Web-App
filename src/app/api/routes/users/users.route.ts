@@ -1,41 +1,38 @@
-/*import Router, { Request , Response } from 'express'
-import { createUser , loginUser} from '@expressControllers/users/users.controller';
-
+import Router, { Request, Response } from 'express'
+import { createUser, loginUser} from '@expressControllers/users/users.controller';
+import {DEFAULT_INTERNAL_ERROR, NO_USER_PAYLOAD} from '@app/api/constants/errors/errors.constant';
 
 const router = Router()
 
-
-router.post('/users', async (req : Request, res : Response) => {
+router.post('/register', async (req : Request, res : Response) : Promise<void> => {
   const userPayload = req.body
 
 
   if( !userPayload ) {
-    res.status(400).json({ error: 'Bad Request: User payload is required' });
+    res.status(400).json({ error: NO_USER_PAYLOAD });
     return;
   }
-
 
   try {
     const newUser = await createUser(userPayload);
     if (newUser instanceof Error) {
-      res.status(400).json({ error: newUser.message });
+      res.status(403).json({ error: newUser.message });
       return;
     }
-
 
     res.status(201).json(newUser);
     return
   }catch(err){
     console.error('Error creating user:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: DEFAULT_INTERNAL_ERROR });
     return;
   }
 })
 
-router.post('/users/auth', async (req : Request, res : Response) => {
+router.post('/login', async (req: Request, res : Response) : Promise<void> => {
   const userLoginPayload = req.body
   if( !userLoginPayload ) {
-    res.status(400).json({ error: 'Bad Request: User login payload is required' });
+    res.status(400).json({ error: NO_USER_PAYLOAD });
     return;
   }
 
@@ -49,11 +46,10 @@ router.post('/users/auth', async (req : Request, res : Response) => {
     res.status(200).json({ user, token });
     return;
   }catch(err){
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: DEFAULT_INTERNAL_ERROR });
     return;
   }
 })
 
-
 export default router;
-*/
+

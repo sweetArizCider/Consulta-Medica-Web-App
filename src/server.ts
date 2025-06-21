@@ -4,6 +4,7 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
+import authUsersRouter from '@expressRoutes/users/users.route'
 import express from 'express';
 import { join } from 'node:path';
 
@@ -14,6 +15,9 @@ const angularApp = new AngularNodeAppEngine();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// routes
+app.use('/api', authUsersRouter );
 
 
 /**

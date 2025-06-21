@@ -16,6 +16,15 @@ export const  getAuthHeaders = (): HeadersInit => {
     : { 'Content-Type': 'application/json' };
 }
 
+export const clearTokenFromLocalStorage = (): void => {
+  localStorage.removeItem('JWT');
+}
+
+export const logout = () : void => {
+  clearTokenFromLocalStorage();
+  window.location.href = '/login';
+}
+
 export const login = async ( userLoginPayload: UserLoginPayload ): Promise<Response | Error> => {
   const headers = getAuthHeaders();
   const requestOptions: RequestInit = {

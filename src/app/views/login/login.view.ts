@@ -5,11 +5,11 @@ import { saveTokenToLocalStorage } from '@services/auth/auth.service'
 
 @Component({
   selector: 'login-view',
-  imports: [NavBar],
-  templateUrl: './login.view.html'
+  imports: [],
+  template: `./login.view.html'`
 })
 export class LoginView {
-
+/*
   async loginHandler(event: SubmitEvent) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
@@ -44,5 +44,5 @@ export class LoginView {
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred during login.';
       alert(`Login failed: ${errorMessage}`);
     }
-  }
+  }*/
 }
