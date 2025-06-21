@@ -4,11 +4,12 @@ import { register } from '@services/auth/auth.service';
 
 @Component({
   selector: 'register-view',
-  imports: [NavBar],
-  templateUrl: './register.view.html'
+  imports: [],
+  template: `./register.view.html`
 })
 export class RegisterView {
 
+  /*
   async registerHandler(event: SubmitEvent) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
@@ -35,4 +36,6 @@ export class RegisterView {
       alert(`Registration failed: ${errorMessage}`);
     }
   }
+  */
+
 }

@@ -1,29 +1,59 @@
-/*
-
 import Users from '@sequelizeModels/Users.model';
 import {UserLoginPayload, UserPayload, UserWithToken} from '@expressModels/users/users';
 import {userSchema, userLoginSchema} from '@joiSchemas/users/users.joi';
-import { config } from 'dotenv'
-config();
-import jwt from 'jsonwebtoken';
+import { generateJWT } from '@expressControllers/JWT/JWT.controller';
 import {
   DEFAULT_INTERNAL_ERROR,
   FAILED_TO_GENERATE_TOKEN,
-  JWT_SECRET_NOT_CONFIGURED, NO_USER_FOUND
+  NO_USER_FOUND,
+  SERVER_ERROR,
+  USER_ALREADY_EXISTS,
+  USER_EMAIL_ALREADY_EXISTS,
+  VALIDATION_ERROR
 } from '@app/api/constants/errors/errors.constant';
-
-const JWT_SECRET = process.env['SECRET']
-const JWT_OPTIONS = { expiresIn: 600 };
+import {hashPassword, comparePassword} from '@expressControllers/bcryptjs/bcryptjs.controller';
 
 export const createUser = async (userPayload : UserPayload) : Promise<Users | Error> => {
   try {
     const { error } = userSchema.validate(userPayload);
     if( error ) {
-      return new Error(`Validation error: ${error.message}`);
+      return new Error(VALIDATION_ERROR(error.message));
     }
-    return await Users.create( userPayload );
+
+    const existingUser = await Users.findOne({
+      where: {
+        username: userPayload.username
+      }
+    });
+
+    if (existingUser) {
+      return new Error(USER_ALREADY_EXISTS(userPayload.username));
+    }
+
+    const existingEmail = await Users.findOne({
+      where: {
+        email: userPayload.email
+      }
+    });
+
+    if (existingEmail) {
+      return new Error(USER_EMAIL_ALREADY_EXISTS(userPayload.email));
+    }
+
+    const hashedPassword = await hashPassword(userPayload.password_hash);
+
+    if (hashedPassword instanceof Error) {
+      return hashedPassword;
+    }
+
+    const newUser = {
+      ...userPayload,
+      password_hash: hashedPassword
+    }
+
+    return await Users.create( newUser );
   } catch ( error ) {
-    console.error( 'Error creating user:', error );
+    console.error(SERVER_ERROR(error) );
     throw error;
   }
 }
@@ -31,14 +61,13 @@ export const createUser = async (userPayload : UserPayload) : Promise<Users | Er
 export const loginUser = async (userLoginPayload : UserLoginPayload) : Promise<UserWithToken | Error> => {
   const { error } = userLoginSchema.validate(userLoginPayload);
   if( error ) {
-   return Error(`Validation error: ${error.message}`);
+   return Error(VALIDATION_ERROR(error.message));
   }
 
   try{
     const user = await Users.findOne({
       where: {
         username: userLoginPayload.username,
-        password: userLoginPayload.password
       }
     });
 
@@ -46,25 +75,24 @@ export const loginUser = async (userLoginPayload : UserLoginPayload) : Promise<U
       return Error(NO_USER_FOUND);
     }
 
-    if( !JWT_SECRET ) {
-      return Error(JWT_SECRET_NOT_CONFIGURED);
+    const isPasswordValid = await comparePassword(userLoginPayload.password_hash, user.password_hash);
+
+    if (!isPasswordValid) {
+      return Error(NO_USER_FOUND);
     }
 
     const plainUser = user.toJSON() ?? user.get({ plain: true });
 
-    const token = jwt.sign(plainUser, JWT_SECRET, JWT_OPTIONS);
-    console.log(token);
+    const token = generateJWT(plainUser);
 
-    if (!token) {
+    if (token instanceof Error) {
       return Error(FAILED_TO_GENERATE_TOKEN);
     }
 
-    return { user , token};
-  }catch(err){
-    console.error('Error finding user:', err);
+    return { user , token } as UserWithToken;
+  }catch(error){
+    console.error(SERVER_ERROR(error));
     return Error(DEFAULT_INTERNAL_ERROR);
   }
 }
-
-*/
 
