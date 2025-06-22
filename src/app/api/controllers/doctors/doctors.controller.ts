@@ -108,14 +108,14 @@ export const updateDoctor = async (id: number, doctorPayload: DoctorPayload): Pr
   }
 }
 
-export const deleteDoctor = async (id: number): Promise<void | Error> => {
+export const deleteDoctor = async (id: number): Promise<Doctors | Error> => {
   try {
     const doctor = await getDoctorById(id);
     if (doctor instanceof Error) {
       return doctor;
     }
 
-    await doctor.update({is_active: false});
+    return await doctor.update({is_active: false});
   } catch (error) {
     console.error(SERVER_ERROR(error));
     return new Error(SERVER_ERROR(error));

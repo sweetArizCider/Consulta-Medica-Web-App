@@ -41,13 +41,13 @@ router.get('/', async ( req : Request, res : Response ) : Promise<void> => {
   try {
     const doctors = await getAllDoctors();
     if (doctors instanceof Error) {
-      res.status(500).json({ error: SERVER_ERROR(doctors.message) });
+      res.status(500).json(ERROR_JSON_RESPONSE(500, DEFAULT_INTERNAL_ERROR, doctors.message));
       return;
     }
     res.status(200).json(SUCCESS_JSON_RESPONSE(200, SUCCESS_ON_FETCH('Doctors'), doctors ));
   } catch (error) {
     console.error(SERVER_ERROR(error));
-    res.status(500).json({ error: DEFAULT_INTERNAL_ERROR });
+    res.status(500).json(ERROR_JSON_RESPONSE(500, DEFAULT_INTERNAL_ERROR, error));
   }
 });
 
@@ -127,7 +127,7 @@ router.patch('/:id', async (req: Request, res: Response): Promise<void> => {
   try {
     const restoredDoctor = await restoreDoctor(doctorId);
     if (restoredDoctor instanceof Error) {
-      res.status(404).json({ error: restoredDoctor.message });
+      res.status(404).json(ERROR_JSON_RESPONSE(404, NOT_FOUND(doctorId), restoredDoctor.message));
       return;
     }
     res.status(200).json(SUCCESS_JSON_RESPONSE(200, SUCCESS_ON_RESTORE('Doctor'), restoredDoctor));
