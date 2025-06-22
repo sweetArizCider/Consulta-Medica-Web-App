@@ -7,13 +7,10 @@ import {
   SERVER_ERROR
 } from '@app/api/constants/errors/errors.constant';
 import { createClient, getClientById, updateClient, getAllClients } from '@expressControllers/clients/clients.controller';
-import {authMiddleware} from '@expressMiddleware/auth/auth.middleware';
 
 const router = Router()
 
-router.use(authMiddleware)
-
-router.post('/clients', async (req: Request, res: Response): Promise<void> => {
+router.post('/', async (req: Request, res: Response): Promise<void> => {
   const clientPayload = req.body
 
   if (!clientPayload) {
@@ -37,7 +34,7 @@ router.post('/clients', async (req: Request, res: Response): Promise<void> => {
   }
 })
 
-router.get('/clients', async (req: Request, res: Response): Promise<void> => {
+router.get('/', async (req: Request, res: Response): Promise<void> => {
   const { id } = req.query;
 
   const isValidId = (typeof id === 'string' && !isNaN(parseInt(id, 10)));
@@ -77,8 +74,15 @@ router.get('/clients', async (req: Request, res: Response): Promise<void> => {
   }
 })
 
-router.put('/clients/:id', async (req: Request, res: Response): Promise<void> => {
-  const clientId = parseInt(req.params['id'], 10);
+router.put('/:id', async (req: Request, res: Response): Promise<void> => {
+  const idParam = req.params['id'];
+  const isValidId = (!isNaN(parseInt(idParam, 10)));
+  if (!isValidId) {
+    res.status(400).json({ error: BAD_REQUEST });
+    return;
+  }
+  const clientId = parseInt(idParam, 10);
+
   const clientPayload = req.body;
 
   if (!clientPayload) {

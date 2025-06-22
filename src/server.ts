@@ -8,6 +8,7 @@ import authUsersRouter from '@expressRoutes/users/users.route'
 import clientsRouter from '@expressRoutes/clients/clients.route';
 import express from 'express';
 import { join } from 'node:path';
+import {authMiddleware} from '@expressMiddleware/auth/auth.middleware';
 
 const browserDistFolder = join(import.meta.dirname, '../public');
 
@@ -19,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use('/api', authUsersRouter );
-app.use('/api', clientsRouter)
+app.use('/api/clients', authMiddleware, clientsRouter)
 
 
 /**
