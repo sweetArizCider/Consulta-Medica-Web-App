@@ -5,7 +5,8 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import authUsersRouter from '@expressRoutes/users/users.route'
-import clientsRouter from '@expressRoutes/clients/clients.route';
+import clientsRouter from '@expressRoutes/clients/clients.route'
+import doctorsRouter from '@expressRoutes/doctors/doctors.route'
 import express from 'express';
 import { join } from 'node:path';
 import {authMiddleware} from '@expressMiddleware/auth/auth.middleware';
@@ -20,7 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use('/api', authUsersRouter );
-app.use('/api/clients', authMiddleware, clientsRouter)
+app.use('/api/clients', authMiddleware, clientsRouter);
+app.use('/api/doctors', authMiddleware, doctorsRouter);
 
 
 /**
