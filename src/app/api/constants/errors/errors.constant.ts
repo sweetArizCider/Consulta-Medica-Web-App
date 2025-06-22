@@ -10,6 +10,9 @@ export const USER_ALREADY_EXISTS = (username : string ) => `User with username $
 export const USER_EMAIL_ALREADY_EXISTS = (email : string ) => `User with email ${email} already exists. Please choose a different email.`;
 export const CLIENT_EMAIL_ALREADY_EXISTS = (email : string ) => `Client with email ${email} already exists. Please choose a different email.`;
 export const CLIENT_PHONE_ALREADY_EXISTS = (phone : string ) => `Client with phone ${phone} already exists. Please choose a different phone number.`;
+export const PHONE_ALREADY_EXISTS = (phone : string ) => `Phone number ${phone} already exists. Please choose a different phone number.`;
+export const EMAIL_ALREADY_EXISTS = (email : string ) => `Email ${email} already exists. Please choose a different email.`;
 export const VALIDATION_ERROR = (errorMessage : string) => `Validation error: ${errorMessage}`;
-export const SERVER_ERROR = (errorMessage : unknown) => `Error... Details -> ${errorMessage}`;
+export const SERVER_ERROR = (errorMessage : unknown) => `Server Error -> ${errorMessage}`;
 export const CLIENT_NOT_FOUND = (id: number | string) => `Client with ID ${id} not found. Please check the ID and try again.`;
+export const NOT_FOUND = (id: number | string) => `Resource with ID ${id} not found. Please check the ID and try again.`;
