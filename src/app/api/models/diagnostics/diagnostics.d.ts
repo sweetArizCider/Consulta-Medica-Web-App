@@ -21,7 +21,7 @@ export interface DiagnosticPayload {
   description?: string | null;
 }
 
-interface DiagnosticResponse {
+export interface DiagnosticResponse {
   diagnostic: Omit<DiagnosticAttributes, 'client' | 'doctor'>;
   client: ClientAttributes | null;
   doctor: DoctorAttributes | null;
