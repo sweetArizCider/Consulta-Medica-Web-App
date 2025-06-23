@@ -8,6 +8,7 @@ import authUsersRouter from '@expressRoutes/users/users.route'
 import clientsRouter from '@expressRoutes/clients/clients.route'
 import doctorsRouter from '@expressRoutes/doctors/doctors.route'
 import medicinesRouter from '@expressRoutes/medicines/medicines.route'
+import diagnosticsRouter from '@expressRoutes/diagnostics/diagnostics.route'
 import express from 'express';
 import { join } from 'node:path';
 import {authMiddleware} from '@expressMiddleware/auth/auth.middleware';
@@ -25,6 +26,7 @@ app.use('/api', authUsersRouter );
 app.use('/api/clients', authMiddleware, clientsRouter);
 app.use('/api/doctors', authMiddleware, doctorsRouter);
 app.use('/api/medicines', authMiddleware, medicinesRouter);
+app.use('/api/diagnostics', authMiddleware, diagnosticsRouter);
 
 
 /**
@@ -69,3 +71,4 @@ if (isMainModule(import.meta.url)) {
  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
 export const reqHandler = createNodeRequestHandler(app);
+
