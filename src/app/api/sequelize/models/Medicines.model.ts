@@ -7,9 +7,9 @@ class Medicines extends Model<MedicineAttributes, InferCreationAttributes<Medici
   declare name: string;
   declare description: string | null;
   declare price: number;
-  declare readonly created_at: CreationOptional<Date>;
-  declare readonly updated_at: CreationOptional<Date>;
-  declare is_active: boolean;
+  declare created_at: CreationOptional<string>;
+  declare updated_at: CreationOptional<string>;
+  declare is_active: CreationOptional<boolean>;
 }
 
 Medicines.init({
@@ -34,12 +34,10 @@ Medicines.init({
     },
   },
   created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
   },
   updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
   },
   is_active: {
     type: DataTypes.BOOLEAN,
@@ -49,9 +47,7 @@ Medicines.init({
   sequelize: getSequelizeInstance(),
   modelName: 'Medicines',
   tableName: 'medicines',
-  timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
+  timestamps: false,
 });
 
 export default Medicines;
