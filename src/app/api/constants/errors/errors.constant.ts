@@ -14,5 +14,8 @@ export const PHONE_ALREADY_EXISTS = (phone : string ) => `Phone number ${phone} 
 export const EMAIL_ALREADY_EXISTS = (email : string ) => `Email ${email} already exists. Please choose a different email.`;
 export const VALIDATION_ERROR = (errorMessage : string) => `Validation error: ${errorMessage}`;
 export const SERVER_ERROR = (errorMessage : unknown) => `Server Error -> ${errorMessage}`;
-export const CLIENT_NOT_FOUND = (id: number | string) => `Client with ID ${id} not found. Please check the ID and try again.`;
 export const NOT_FOUND = (id: number | string) => `Resource with ID ${id} not found. Please check the ID and try again.`;
+export const CLIENT_NOT_FOUND = (id: number) => `Client with ID '${id}' not found.`;
+export const DOCTOR_NOT_FOUND = (id: number) => `Doctor with ID '${id}' not found.`;
+export const CLIENT_NOT_ACTIVE = (id: number) => `Client with ID '${id}' is not active. Please check the client's status.`;
+export const DOCTOR_NOT_ACTIVE = (id: number) => `Doctor with ID '${id}' is not active. Please check the doctor's status.`;

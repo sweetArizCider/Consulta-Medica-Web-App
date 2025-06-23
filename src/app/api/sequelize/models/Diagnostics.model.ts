@@ -8,10 +8,10 @@ class Diagnostics extends Model<DiagnosticAttributes, InferCreationAttributes<Di
   declare id_diagnostic: CreationOptional<number>;
   declare client_id: ForeignKey<number>;
   declare doctor_id: ForeignKey<number>;
-  declare diagnosis_date: Date;
+  declare diagnosis_date: CreationOptional<string>;
   declare description: string | null;
-  declare readonly created_at: CreationOptional<Date>;
-  declare readonly updated_at: CreationOptional<Date>;
+  declare created_at: CreationOptional<string>;
+  declare updated_at: CreationOptional<string>;
 }
 
 Diagnostics.init({
@@ -37,28 +37,26 @@ Diagnostics.init({
     },
   },
   diagnosis_date: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
   },
   description: {
     type: DataTypes.TEXT,
     allowNull: true,
   },
   created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
   },
   updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
   },
 }, {
   sequelize: getSequelizeInstance(),
   modelName: 'Diagnostics',
   tableName: 'diagnostics',
-  timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
+  timestamps: false
 });
+
+Diagnostics.belongsTo(Clients, { foreignKey: 'client_id', as: 'client' });
+Diagnostics.belongsTo(Doctors, { foreignKey: 'doctor_id', as: 'doctor' });
 
 export default Diagnostics;
