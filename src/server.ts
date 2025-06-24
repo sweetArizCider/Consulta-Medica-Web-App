@@ -9,6 +9,7 @@ import clientsRouter from '@expressRoutes/clients/clients.route'
 import doctorsRouter from '@expressRoutes/doctors/doctors.route'
 import medicinesRouter from '@expressRoutes/medicines/medicines.route'
 import diagnosticsRouter from '@expressRoutes/diagnostics/diagnostics.route'
+import medicinesRequiredRouter from '@expressRoutes/medicinesRequired/medicinesRequired.route';
 import express from 'express';
 import { join } from 'node:path';
 import {authMiddleware} from '@expressMiddleware/auth/auth.middleware';
@@ -27,6 +28,7 @@ app.use('/api/clients', authMiddleware, clientsRouter);
 app.use('/api/doctors', authMiddleware, doctorsRouter);
 app.use('/api/medicines', authMiddleware, medicinesRouter);
 app.use('/api/diagnostics', authMiddleware, diagnosticsRouter);
+app.use('/api/medicinesRequired', authMiddleware, medicinesRequiredRouter);
 
 
 /**

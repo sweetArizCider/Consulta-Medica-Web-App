@@ -19,3 +19,6 @@ export const CLIENT_NOT_FOUND = (id: number) => `Client with ID '${id}' not foun
 export const DOCTOR_NOT_FOUND = (id: number) => `Doctor with ID '${id}' not found.`;
 export const CLIENT_NOT_ACTIVE = (id: number) => `Client with ID '${id}' is not active. Please check the client's status.`;
 export const DOCTOR_NOT_ACTIVE = (id: number) => `Doctor with ID '${id}' is not active. Please check the doctor's status.`;
+export const DIAGNOSTIC_NOT_FOUND = (id: number) => `Diagnostic with ID '${id}' not found.`;
+export const MEDICINE_NOT_FOUND = (id: number) => `Medicine with ID '${id}' not found.`;
+export const MEDICINE_NOT_ACTIVE = (id: number) => `Medicine with ID '${id}' is not active. Please check the medicine's status.`;
