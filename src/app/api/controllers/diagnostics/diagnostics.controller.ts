@@ -73,6 +73,25 @@ export const getDiagnosticById = async (id: number): Promise<DiagnosticResponse 
   }
 };
 
+export const getDiagnosticsByClientId = async (clientId: number): Promise<DiagnosticResponse[] | Error> => {
+  try {
+    const client = await Clients.findByPk(clientId);
+    if (!client) return new Error(CLIENT_NOT_FOUND(clientId));
+
+    const diagnostics = await Diagnostics.findAll({
+      where: { client_id: clientId },
+      include: [
+        { model: Clients, as: 'client' },
+        { model: Doctors, as: 'doctor' }
+      ]
+    });
+    return diagnostics.map(formatDiagnosticResponse);
+  } catch (err) {
+    console.error(SERVER_ERROR(err));
+    return new Error(SERVER_ERROR(err));
+  }
+};
+
 export const updateDiagnostic = async (id: number, diagnosticPayload: DiagnosticPayload): Promise<DiagnosticResponse | Error> => {
   const { error } = diagnosticSchema.validate(diagnosticPayload);
   if (error) return new Error(VALIDATION_ERROR(error.message));

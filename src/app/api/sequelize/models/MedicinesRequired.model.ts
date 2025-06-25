@@ -11,8 +11,8 @@ class MedicinesRequired extends Model<MedicineRequiredAttributes, InferCreationA
   declare dosage: string | null;
   declare frequency: string | null;
   declare duration: string | null;
-  declare readonly created_at: CreationOptional<Date>;
-  declare readonly updated_at: CreationOptional<Date>;
+  declare created_at: CreationOptional<string>;
+  declare updated_at: CreationOptional<string>;
 }
 
 MedicinesRequired.init({
@@ -50,20 +50,21 @@ MedicinesRequired.init({
     allowNull: true,
   },
   created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
   },
   updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
   },
 }, {
   sequelize: getSequelizeInstance(),
   modelName: 'MedicinesRequired',
   tableName: 'medicines_required',
-  timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
+  timestamps: false,
 });
+
+MedicinesRequired.belongsTo(Medicines, { foreignKey: 'medicine_id', as: 'medicine' });
+Diagnostics.hasMany(MedicinesRequired, { foreignKey: 'diagnostic_id', as: 'medicinesRequired' });
+MedicinesRequired.belongsTo(Diagnostics, { foreignKey: 'diagnostic_id', as: 'diagnostic' });
+
 
 export default MedicinesRequired;

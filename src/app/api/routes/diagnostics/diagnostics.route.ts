@@ -1,52 +1,72 @@
 import Router, { Request, Response } from 'express';
-import { BAD_REQUEST, NOT_FOUND, DEFAULT_INTERNAL_ERROR, NO_USER_PAYLOAD, SERVER_ERROR } from '@app/api/constants/errors/errors.constant';
+import { BAD_REQUEST, DEFAULT_INTERNAL_ERROR, NO_USER_PAYLOAD, SERVER_ERROR } from '@app/api/constants/errors/errors.constant';
 import {
   SUCCESS_ON_CREATE,
   SUCCESS_ON_FETCH,
   SUCCESS_ON_UPDATE
-} from '@app/api/constants/onSuccess/onSuccess.constant'
-import { createDiagnostic, getAllDiagnostics, getDiagnosticById, updateDiagnostic } from '@expressControllers/diagnostics/diagnostics.controller';
-import {ERROR_JSON_RESPONSE, SUCCESS_JSON_RESPONSE} from '@app/api/constants/response/responses.constants'
+} from '@app/api/constants/onSuccess/onSuccess.constant';
+import {
+  createDiagnostic,
+  getAllDiagnostics,
+  getDiagnosticById,
+  getDiagnosticsByClientId,
+  updateDiagnostic
+} from '@expressControllers/diagnostics/diagnostics.controller';
+import { ERROR_JSON_RESPONSE, SUCCESS_JSON_RESPONSE } from '@app/api/constants/response/responses.constants';
 
 const router = Router();
 
-router.get('/', async ( req : Request, res : Response ) : Promise<void> => {
-  const { id } = req.query;
+router.get('/', async (req: Request, res: Response): Promise<void> => {
+  const { id, client_id } = req.query;
 
-  const isValidId = (typeof id === 'string' && !isNaN(parseInt(id, 10)));
+  const isValidId = (val: any): boolean => typeof val === 'string' && !isNaN(parseInt(val, 10));
 
-  if (id && !isValidId) {
-    res.status(400).json(ERROR_JSON_RESPONSE(400, BAD_REQUEST, null));
-    return;
-  }
-
-  if (id && isValidId) {
-    const diagnosticId = parseInt(id, 10);
+  if (id) {
+    if (!isValidId(id)) {
+      res.status(400).json(ERROR_JSON_RESPONSE(400, BAD_REQUEST, 'Invalid ID format'));
+      return;
+    }
+    const diagnosticId = parseInt(id as string, 10);
     try {
-      const diagnostic = await getDiagnosticById(diagnosticId);
-      if (diagnostic instanceof Error) {
-        res.status(404).json(ERROR_JSON_RESPONSE(404, NOT_FOUND(diagnosticId), diagnostic.message));
+      const result = await getDiagnosticById(diagnosticId);
+      if (result instanceof Error) {
+        res.status(404).json(ERROR_JSON_RESPONSE(404, result.message, null));
         return;
       }
-      res.status(200).json(SUCCESS_JSON_RESPONSE(200, SUCCESS_ON_FETCH('Diagnostic'), diagnostic ));
-      return;
+      res.status(200).json(SUCCESS_JSON_RESPONSE(200, SUCCESS_ON_FETCH('Diagnostic'), result));
     } catch (error) {
       console.error(SERVER_ERROR(error));
       res.status(500).json(ERROR_JSON_RESPONSE(500, DEFAULT_INTERNAL_ERROR, error));
+    }
+  } else if (client_id) {
+    if (!isValidId(client_id)) {
+      res.status(400).json(ERROR_JSON_RESPONSE(400, BAD_REQUEST, 'Invalid Client ID format'));
       return;
     }
-  }
-
-  try {
-    const diagnostics = await getAllDiagnostics();
-    if (diagnostics instanceof Error) {
-      res.status(500).json(ERROR_JSON_RESPONSE(500, DEFAULT_INTERNAL_ERROR, diagnostics.message));
-      return;
+    const clientId = parseInt(client_id as string, 10);
+    try {
+      const result = await getDiagnosticsByClientId(clientId);
+      if (result instanceof Error) {
+        res.status(404).json(ERROR_JSON_RESPONSE(404, result.message, null));
+        return;
+      }
+      res.status(200).json(SUCCESS_JSON_RESPONSE(200, SUCCESS_ON_FETCH(`Diagnostics for client ${clientId}`), result));
+    } catch (error) {
+      console.error(SERVER_ERROR(error));
+      res.status(500).json(ERROR_JSON_RESPONSE(500, DEFAULT_INTERNAL_ERROR, error));
     }
-    res.status(200).json(SUCCESS_JSON_RESPONSE(200, SUCCESS_ON_FETCH('Diagnostics'), diagnostics ));
-  } catch (error) {
-    console.error(SERVER_ERROR(error));
-    res.status(500).json(ERROR_JSON_RESPONSE(500, DEFAULT_INTERNAL_ERROR, error));
+  } else {
+    try {
+      const records = await getAllDiagnostics();
+      if (records instanceof Error) {
+        res.status(500).json(ERROR_JSON_RESPONSE(500, records.message, null));
+        return;
+      }
+      res.status(200).json(SUCCESS_JSON_RESPONSE(200, SUCCESS_ON_FETCH('All Diagnostics'), records));
+    } catch (error) {
+      console.error(SERVER_ERROR(error));
+      res.status(500).json(ERROR_JSON_RESPONSE(500, DEFAULT_INTERNAL_ERROR, error));
+    }
   }
 });
 
