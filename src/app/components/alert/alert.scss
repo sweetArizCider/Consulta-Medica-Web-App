@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+
+.custom-snackbar {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-shape: 10px
+  ));
+}
+
+.success-snackbar {
+  @include mat.snack-bar-overrides((
+    container-color: #4CAF5099,
+  ));
+}
+
+.warning-snackbar {
+  @include mat.snack-bar-overrides((
+    container-color: #FFC10799,
+  ));
+}
+
+.danger-snackbar {
+  @include mat.snack-bar-overrides((
+    container-color: #F4433699,
+  ));
+}

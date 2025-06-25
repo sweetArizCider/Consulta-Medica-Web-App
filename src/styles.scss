@@ -1,7 +1,9 @@
+// src/styles.scss
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use 'app/components/alert/alert';
 
 html {
   @include mat.theme((
@@ -13,12 +15,15 @@ html {
     typography: Roboto,
     density: 0,
   ));
-}/* You can add global styles to this file, and also import other style files */
+}
+
+
+/* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-// Variables de color 
+// Variables de color
 $color-azul: #72A6BB;
 $color-azul-claro: #EAF2F5;
 $color-gris: #B6B6B6;
