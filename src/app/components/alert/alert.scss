@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+
+@include mat.snack-bar-overrides((
+  container-color: #FFFFFF,
+  container-shape: 20px,
+  supporting-text-color: black,
+  button-color: #72A6BB,
+));
+
+.mdc-snackbar__label {
+  text-align: center;
+}
