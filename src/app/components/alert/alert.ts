@@ -1,47 +1,26 @@
-import {Component, inject} from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { Injectable  } from '@angular/core';
+import { MatSnackBar} from '@angular/material/snack-bar';
 
-@Component({
-  selector: 'snack-bar-component-example',
-  template: `
-    <mat-form-field>
-      <mat-label>Snack bar duration (seconds)</mat-label>
-      <input type="number" [(ngModel)]="durationInSeconds" matInput>
-    </mat-form-field>
-
-    <div class="mat-button-row">
-      <button mat-stroked-button (click)="openSnackBar('success')" color="primary">Success</button>
-      <button mat-stroked-button (click)="openSnackBar('warning')" color="accent">Warning</button>
-      <button mat-stroked-button (click)="openSnackBar('danger')" color="warn">Danger</button>
-    </div>
-  `,
-  imports: [MatFormFieldModule, FormsModule, MatInputModule, MatButtonModule],
+@Injectable({
+  providedIn: "root"
 })
-export class SnackBarComponentExample {
-  private _snackBar = inject(MatSnackBar);
 
-  durationInSeconds = 5;
+export class Alert {
+  constructor(private _snackBar: MatSnackBar) {}
 
-  openSnackBar(type: string) {
-    this._snackBar.openFromComponent(PizzaPartyComponent, {
-      duration: this.durationInSeconds * 1000,
-      horizontalPosition: 'center',
+  showSuccess(message: string,  action: string = 'Close'){
+    this._snackBar.open(message, action, {
+      duration: 2000,
       verticalPosition: 'top',
-      panelClass: ['custom-snackbar', `${type}-snackbar`],
+      horizontalPosition: 'center',
+    });
+  }
+
+  showError(message: string, action: string = 'Close') {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
     });
   }
 }
-
-@Component({
-  selector: 'snack-bar-component-example-snack',
-  template: `
-    <span class="example-pizza-party">
-  Pizza party!!! 🍕
-</span>`,
-  // The styleUrl property should be removed here
-})
-export class PizzaPartyComponent {}

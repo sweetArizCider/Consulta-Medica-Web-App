@@ -27,7 +27,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/app/components/alert/alert.scss"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
