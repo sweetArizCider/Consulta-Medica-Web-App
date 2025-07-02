@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<mat-dialog-content [formGroup]="modalForm">
+  <div *ngFor="let field of data.fields" class="form-field-container">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ field.label }}</mat-label>
+      <input matInput [type]="field.type || 'text'" [formControlName]="field.name">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button class="test-button">Test Button</button>
+  <button mat-button (click)="onCancel()">{{ data.cancelButtonText }}</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()" [disabled]="!modalForm.valid">{{ data.confirmButtonText }}</button>
+</mat-dialog-actions>

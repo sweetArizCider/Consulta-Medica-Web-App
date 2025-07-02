@@ -28,7 +28,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/app/components/alert/alert.scss"
+              "src/app/components/alert/alert.scss",
+              "src/app/components/modal/modal.scss"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
