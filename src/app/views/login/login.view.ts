@@ -1,14 +1,26 @@
 import { Component } from '@angular/core';
-import { NavBar} from '@components/navBar/navBar';
+import { CommonModule } from '@angular/common';
 import { login } from '@services/auth/auth.service';
-import { saveTokenToLocalStorage } from '@services/auth/auth.service'
+import { saveTokenToLocalStorage } from '@services/auth/auth.service';
+import { ButtonComponent } from '../../layouts/button/button.component';
+import {InputComponent} from '../../layouts/input/input.component';
 
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, ButtonComponent, InputComponent],
+  templateUrl: './login.view.html',
+})
+export class LoginViewComponent {
+
+}
+/*
 @Component({
   selector: 'login-view',
   imports: [],
   template: `./login.view.html'`
 })
-export class LoginView {
+export class LoginView {*/
 /*
   async loginHandler(event: SubmitEvent) {
     event.preventDefault();
@@ -45,4 +57,3 @@ export class LoginView {
       alert(`Login failed: ${errorMessage}`);
     }
   }*/
-}
