@@ -65,32 +65,80 @@
   margin-top: 100px;
 }
 
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  margin-bottom: 24px;
-  border-radius: 10px;
+.loader-bar {
+  width: 350px;
+  height: 50px;
+  border: 3px solid white;
+  border-radius: 999px;
+  position: relative;
   overflow: hidden;
-  
-  ::ng-deep .mdc-linear-progress__buffer {
-    background-color: rgba(255, 255, 255, 0.2);
+  margin: 0 auto;
+  padding: 4px;
+}
+
+.loader-fill {
+  width: 180px;
+  height: calc(100% - 8px);
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.6) 0%, 
+    rgba(255, 255, 255, 0.9) 20%,
+    white 40%, 
+    white 60%, 
+    rgba(255, 255, 255, 0.9) 80%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  border-radius: 999px;
+  position: absolute;
+  top: 4px;
+  left: -180px;
+  animation: fillLoader 4s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(255, 255, 255, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes fillLoader {
+  0% {
+    left: -180px;
+    transform: scale(1) rotate(0deg);
+    opacity: 0.7;
   }
-  
-  ::ng-deep .mdc-linear-progress__primary-bar {
-    background-color: white;
+  15% {
+    transform: scale(1.08) rotate(1deg);
+    opacity: 0.9;
   }
-  
-  ::ng-deep .mdc-linear-progress__bar {
-    background-color: white;
+  30% {
+    transform: scale(0.96) rotate(-0.5deg);
+    opacity: 1;
+  }
+  45% {
+    transform: scale(1.04) rotate(0.8deg);
+  }
+  60% {
+    transform: scale(0.98) rotate(-0.3deg);
+  }
+  75% {
+    transform: scale(1.02) rotate(0.2deg);
+    opacity: 0.9;
+  }
+  90% {
+    transform: scale(0.99) rotate(0deg);
+    opacity: 0.7;
+  }
+  100% {
+    left: 370px;
+    transform: scale(1) rotate(0deg);
+    opacity: 0.7;
   }
 }
 
-.progress-message {
+.loader-text {
   color: rgba(255, 255, 255, 0.95);
   font-family: 'Montserrat', sans-serif;
   font-size: 1.1rem;
   font-weight: 400;
-  margin: 0;
+  margin-top: 24px;
   text-align: center;
   letter-spacing: 0.5px;
 }

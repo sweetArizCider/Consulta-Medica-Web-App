@@ -1,8 +1,8 @@
-@if (isLoading) {
-  <div class="loader-overlay" role="alert" aria-busy="true">
+@if (finalIsLoading()) {
+  <div class="loader-overlay" role="alert" aria-busy="true" aria-live="polite">
     <div class="loader-container">
       <div class="logo-section">
-        <img src="/images/logo.png" alt="Logo" class="logo-image" />
+        <img src="/images/logo.png" alt="Logo de Coastal Care Center" class="logo-image" />
         <div class="logo-text">
           <span class="coastal">Coastal</span>
           <span class="care-center">Care Center</span>
@@ -10,12 +10,12 @@
       </div>
       
       <div class="progress-section">
-        <mat-progress-bar 
-          mode="indeterminate"
-          class="progress-bar">
-        </mat-progress-bar>
-        <p class="progress-message">{{ message }}</p>
+        <div class="loader-bar">
+          <div class="loader-fill"></div>
+        </div>
+        <p class="loader-text" [attr.aria-label]="finalMessage()">{{ finalMessage() }}</p>
       </div>
     </div>
   </div>
 }
+
