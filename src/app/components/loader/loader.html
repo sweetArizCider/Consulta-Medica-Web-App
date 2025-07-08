@@ -1,19 +1,21 @@
-<div class="loader-overlay" *ngIf="isLoading">
-  <div class="loader-container">
-    <div class="logo-section">
-      <img src="/images/logo.png" alt="Logo" class="logo-image" />
-      <div class="logo-text">
-        <span class="coastal">Coastal</span>
-        <span class="care-center">Care Center</span>
+@if (isLoading) {
+  <div class="loader-overlay" role="alert" aria-busy="true">
+    <div class="loader-container">
+      <div class="logo-section">
+        <img src="/images/logo.png" alt="Logo" class="logo-image" />
+        <div class="logo-text">
+          <span class="coastal">Coastal</span>
+          <span class="care-center">Care Center</span>
+        </div>
+      </div>
+      
+      <div class="progress-section">
+        <mat-progress-bar 
+          mode="indeterminate"
+          class="progress-bar">
+        </mat-progress-bar>
+        <p class="progress-message">{{ message }}</p>
       </div>
     </div>
-    
-    <div class="progress-section">
-      <mat-progress-bar 
-        mode="indeterminate"
-        class="progress-bar">
-      </mat-progress-bar>
-      <p class="progress-message">{{ message }}</p>
-    </div>
   </div>
-</div>
+}

@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { HttpInterceptorFn, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptorFn, HttpResponse, HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { tap, finalize } from 'rxjs/operators';
 import { LoaderService } from './loader.service';
 
@@ -8,11 +8,11 @@ let activeRequests = 0;
 
 // Mensajes de carga por endpoint
 const loadingMessages: { [key: string]: string } = {
+  '/medicinesRequired': 'Cargando medicinas requeridas...',
+  '/medicines': 'Cargando medicinas...',
   '/clients': 'Cargando clientes...',
   '/doctors': 'Cargando médicos...',
   '/diagnostics': 'Cargando diagnósticos...',
-  '/medicines': 'Cargando medicinas...',
-  '/medicinesRequired': 'Cargando medicinas requeridas...',
   '/users': 'Cargando usuarios...',
   'POST': 'Guardando información...',
   'PUT': 'Actualizando información...',
@@ -62,7 +62,7 @@ export const loaderInterceptor: HttpInterceptorFn = (req, next) => {
   );
 };
 
-function getLoadingMessage(req: any): string {
+function getLoadingMessage(req: HttpRequest<any>): string {
   // Buscar mensaje por URL
   for (const [path, message] of Object.entries(loadingMessages)) {
     if (req.url.includes(path) && path !== 'POST' && path !== 'PUT' && path !== 'DELETE') {

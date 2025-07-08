@@ -8,9 +8,9 @@ import { Subscription } from 'rxjs';
   selector: 'app-loader',
   imports: [MatProgressBarModule, CommonModule],
   templateUrl: './loader.html',
-  styleUrl: './loader.scss'
+  styleUrls: ['./loader.scss']
 })
-export class Loader implements OnInit, OnDestroy {
+export class LoaderComponent implements OnInit, OnDestroy {
   @Input() isLoading: boolean = false;
   @Input() message: string = 'Cargando...';
   
