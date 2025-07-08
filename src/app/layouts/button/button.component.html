@@ -1,0 +1,13 @@
+<button
+  [type]="type"
+  [disabled]="disabled"
+  [class]="customClass"
+  [ngClass]="{
+    'btn': true,
+    'btn-primary': buttonType === ButtonType.Primary,
+    'btn-secondary': buttonType === ButtonType.Secondary,
+    'btn-outline': buttonType === ButtonType.Outline
+  }"
+  (click)="onButtonClick($event)">
+  {{ text }}
+</button>
