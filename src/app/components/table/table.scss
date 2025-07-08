@@ -1,0 +1,271 @@
+@use '@angular/material' as mat;
+
+// Import your global color variables
+$color-gris: #B6B6B6;
+$color-fondo: #FFFFFF;
+$color-borde: #EAF2F5;
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed; // Esto hace que las columnas respeten el ancho especificado
+}
+
+// Override Material table tokens
+:root {
+  @include mat.table-overrides((
+    background-color: $color-fondo,
+    header-headline-color: $color-gris,
+    row-item-label-text-color: #000000,
+    row-item-outline-color: $color-borde,
+  ));
+}
+
+// Material Symbols styling
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+}
+
+// Header content styling
+.header-content {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+}
+
+.triangle-icon {
+  font-size: 24px !important;
+  color: $color-gris !important;
+  flex-shrink: 0 !important;
+}
+
+// Sort styling
+.mat-sort-header-arrow {
+  color: $color-gris !important;
+}
+
+.mat-sort-header-content {
+  color: $color-gris !important;
+}
+
+.mat-sort-header-button {
+  border: none !important;
+  background: transparent !important;
+  color: $color-gris !important;
+  width: 100% !important;
+  text-align: left !important;
+  padding: 0 !important;
+}
+
+// Actions styling
+.actions-container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background: transparent !important;
+}
+
+.action-trigger {
+  background: transparent !important;
+  border: none !important;
+  padding: 8px !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: auto !important;
+  
+  &:hover {
+    background: transparent !important;
+  }
+  
+  &.mat-mdc-icon-button {
+    background: transparent !important;
+    
+    &:hover {
+      background: transparent !important;
+    }
+  }
+}
+
+.action-icon {
+  font-size: 37px !important;
+  color: $color-gris !important;
+  background: transparent !important;
+  display: block !important;
+}
+
+// Menu styling
+.action-menu {
+  .mat-mdc-menu-panel {
+    background-color: $color-fondo !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+.menu-item {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 14px !important;
+  padding: 12px 16px !important;
+  
+  &:hover {
+    background-color: #f5f5f5 !important;
+  }
+  
+  span {
+    color: #000000 !important;
+  }
+}
+
+// Main table container styling
+.mat-mdc-table {
+  background-color: $color-fondo !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+  border: none !important;
+  width: 100% !important;
+  table-layout: fixed !important; // Enable fixed layout for custom widths
+}
+
+// Header styling
+.mat-mdc-header-row {
+  background-color: $color-fondo !important;
+  border-radius: 20px 20px 0 0 !important;
+
+  th {
+    background-color: $color-fondo !important;
+  }
+}
+
+.mat-mdc-header-cell {
+  background-color: $color-fondo !important;
+  color: $color-gris !important;
+  border-bottom: 3px solid $color-borde !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  text-align: left !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+
+  // First header cell (left border radius)
+  &:first-child {
+    border-top-left-radius: 20px !important;
+  }
+
+  // Last header cell (right border radius)
+  &:last-child {
+    border-top-right-radius: 20px !important;
+  }
+}
+
+// Row and cell styling
+.mat-mdc-row {
+  background-color: $color-fondo !important;
+
+  td {
+    background-color: $color-fondo !important;
+  }
+
+  &:hover {
+    background-color: #f8f9fa !important;
+
+    td {
+      background-color: #f8f9fa !important;
+    }
+
+    // Aplicar hover también a los elementos de acciones
+    .actions-container {
+      background-color: #f8f9fa !important;
+    }
+
+    .action-trigger {
+      background-color: #f8f9fa !important;
+    }
+  }
+
+  // Last row styling for bottom border radius
+  &:last-child {
+    .mat-mdc-cell {
+      border-bottom: none !important;
+
+      &:first-child {
+        border-bottom-left-radius: 20px !important;
+      }
+
+      &:last-child {
+        border-bottom-right-radius: 20px !important;
+      }
+    }
+  }
+}
+
+.mat-mdc-cell {
+  background-color: $color-fondo !important;
+  color: #000000 !important;
+  border-bottom: 3px solid $color-borde !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  padding: 12px 16px !important;
+  text-align: left !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+// Table wrapper for additional styling control
+.table-container {
+  background-color: $color-fondo !important;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: none;
+  border: none;
+}
+
+// General table sizing and color enforcement
+table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: none !important;
+  background-color: $color-fondo !important;
+}
+
+// Additional Material overrides to force colors
+.mdc-data-table__table {
+  background-color: $color-fondo !important;
+}
+
+.mdc-data-table__row {
+  background-color: $color-fondo !important;
+  border-bottom-color: $color-borde !important;
+}
+
+.mdc-data-table__cell {
+  background-color: $color-fondo !important;
+  border-bottom-color: $color-borde !important;
+  text-align: left !important;
+}
+
+.mdc-data-table__header-cell {
+  background-color: $color-fondo !important;
+  border-bottom-color: $color-borde !important;
+  text-align: left !important;
+}
