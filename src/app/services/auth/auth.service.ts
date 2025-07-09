@@ -1,4 +1,4 @@
-import {UserLoginPayload, UserPayload} from '@expressModels/users/users';
+import {UserAttributes, UserLoginPayload, UserPayload} from '@expressModels/users/users';
 import {BAD_REQUEST, UNAUTHORIZED, DEFAULT_INTERNAL_ERROR} from '@app/api/constants/errors/errors.constant';
 
 export const getTokenFromLocalStorage = (): string | null => {
@@ -79,5 +79,22 @@ export const register = async (userPayload: UserPayload): Promise<Response | Err
   } catch (error) {
     console.error('Registration error:', error);
     throw error;
+  }
+}
+
+export const getCurrentUserFromToken = async () => {
+  const token = getTokenFromLocalStorage();
+  if (!token) {
+    return null;
+  }
+  try {
+    const payload = token.split('.')[1];
+    const decodedPayload = atob(payload);
+    const user : UserAttributes = JSON.parse(decodedPayload);
+
+    return user.photo_profile_url || null;
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
   }
 }
