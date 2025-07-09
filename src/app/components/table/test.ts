@@ -21,16 +21,18 @@ import { TableComponent, TableColumn, TableRow } from './table';
 })
 export class TableTestComponent {
   // Definir columnas como en la imagen
-  columns: TableColumn[] = [
-    { key: 'nombre', header: 'Nombre', width: 250, sortable: true },
-    { key: 'correo', header: 'Correo', width: 300, sortable: true },
-    { key: 'telefono', header: 'Teléfono', width: 200, sortable: true },
-    { key: 'especialidad', header: 'Especialidad', width: 200, sortable: true }
-  ];
+columns: TableColumn[] = [
+  { key: 'espacio', header: '', width: '2rem', sortable: false, showTriangle: false },
+  { key: 'nombre', header: 'Nombre', width: 250, sortable: true, showTriangle: true },
+  { key: 'correo', header: 'Correo', width: 300, sortable: true, showTriangle: true },
+  { key: 'telefono', header: 'Teléfono', width: 200, sortable: true, showTriangle: true },
+  { key: 'especialidad', header: 'Especialidad', width: 200, sortable: true, showTriangle: true }
+];
 
   // Datos de doctores como en la imagen
   data: TableRow[] = [
     { 
+
       nombre: 'Pamela Robledo Pinto', 
       correo: 'pamelarobledo@gmail.com', 
       telefono: '+52 871 571 0287', 

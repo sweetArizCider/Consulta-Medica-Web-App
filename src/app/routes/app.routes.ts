@@ -4,6 +4,6 @@ import { MyFeatureComponent } from '../components/modal/test';
 
 export const routes: Routes = [
   {path: '', component: TableTestComponent},
-  { path: '/test', component: MyFeatureComponent }
+  { path: 'test', component: MyFeatureComponent }
 ];
 

@@ -13,6 +13,7 @@ export interface TableColumn {
   type?: 'text' | 'number' | 'date';
   width?: string | number;
   sortable?: boolean;
+  showTriangle?: boolean; // <-- nueva propiedad
 }
 
 export interface TableRow {
