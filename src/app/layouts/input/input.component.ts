@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,14 +10,23 @@ import { CommonModule } from '@angular/common';
 })
 export class InputComponent {
   @Input() placeholder: string = '';
-  @Input() icon: string = ''; 
+  @Input() icon: string = '';
   @Input() type: string = 'text';
   @Input() name: string = '';
   @Input() value: string = '';
   @Input() disabled: boolean = false;
+  @Output() input = new EventEmitter<Event>();
 
   get iconPath(): string {
     return `/icons/${this.icon}.svg`;
   }
-}
 
+  get isMaterialIcon(): boolean {
+    // Explicitly convert to boolean using !!
+    return !!(this.icon && !this.icon.includes('.svg') && !this.icon.includes('/'));
+  }
+
+  onInput(event: Event): void {
+    this.input.emit(event);
+  }
+}

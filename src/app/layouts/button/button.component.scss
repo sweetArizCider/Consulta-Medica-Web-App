@@ -2,10 +2,10 @@
 .btn {
   width: 100%;
   padding: 12px 24px;
-  border-radius: 50px; 
+  border-radius: 50px;
   border: 2px solid transparent;
-  font-size: 1rem; 
-  font-weight: 600; 
+  font-size: 1.2rem;
+  font-weight: 600;
   font-family: 'Roboto';
   cursor: pointer;
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
@@ -18,10 +18,10 @@
 }
 
 .btn-primary {
-  background-color: $color-azul; 
+  background-color: $color-azul;
   color: $color-blanco;
   &:hover:not(:disabled) {
-    background-color: #4a7c8f; 
+    background-color: #4a7c8f;
   }
 }
 
@@ -29,7 +29,7 @@
   background-color: $color-blanco;
   color: #5D9CB3;
   &:hover:not(:disabled) {
-    background-color: $color-azul-claro; 
+    background-color: $color-azul-claro;
   }
 }
 
@@ -38,6 +38,6 @@
   border-color: $color-blanco;
   color: $color-blanco;
   &:hover:not(:disabled) {
-    background-color: rgba(0, 0, 0, 0.1); 
+    background-color: rgba(0, 0, 0, 0.1);
   }
 }
