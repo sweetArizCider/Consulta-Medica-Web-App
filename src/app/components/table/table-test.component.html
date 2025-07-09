@@ -1,0 +1,10 @@
+<!-- In your template -->
+<table-selector
+  [columns]="userColumns"
+  [rows]="userData"
+  [rowHeight]="60"
+  [headerHeight]="80"
+  [showActions]="true"
+  (editRow)="onEditUser($event)"
+  (deleteRow)="onDeleteUser($event)">
+</table-selector>

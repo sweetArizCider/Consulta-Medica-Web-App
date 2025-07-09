@@ -1,0 +1,245 @@
+@use '@angular/material' as mat;
+@use '../../../styles.scss' as *;
+
+.table-container {
+  background-color: $color-blanco;
+  border-radius: 20px;
+  max-width: 1200px;
+  overflow-x: auto;
+  border: none;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 2rem auto; 
+}
+
+table {
+  table-layout: fixed;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+}
+
+.header-content {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.triangle-icon {
+  font-size: 24px !important;
+  color: $color-gris !important;
+  flex-shrink: 0 !important;
+}
+
+.mat-sort-header-arrow {
+  color: $color-gris !important;
+}
+
+.mat-sort-header-content {
+  color: $color-gris !important;
+}
+
+.mat-sort-header-button {
+  border: none !important;
+  background: transparent !important;
+  color: $color-gris !important;
+  text-align: left !important;
+}
+
+.actions-container {
+  display: flex !important;
+  justify-content: center !important;
+  background: transparent !important;
+}
+
+.action-trigger {
+  background: transparent !important;
+  border: none !important;
+  padding: 8px !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: auto !important;
+  
+  &:hover {
+    background: transparent !important;
+  }
+  
+  &.mat-mdc-icon-button {
+    background: transparent !important;
+    
+    &:hover {
+      background: transparent !important;
+    }
+  }
+}
+
+.action-icon {
+  font-size: 37px !important;
+  color: $color-gris !important;
+  background: transparent !important;
+  display: block !important;
+}
+
+// Menu styling
+.action-menu {
+  .mat-mdc-menu-panel {
+    background: #fff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.13) !important;
+    min-width: 200px !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+}
+
+.menu-item {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px !important;
+  color: $color-blanco !important; // gris claro
+  padding: 18px 24px !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  min-height: 48px !important;
+  transition: background 0.2s;
+
+  &:hover, &:focus {
+    background: #f5f5f5 !important;
+    color: #72A6BB !important; // azul de tu paleta
+  }
+
+  // El texto dentro del botón
+  span {
+    color: inherit !important;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+  }
+}
+
+// Línea divisora entre items
+.menu-item + .menu-item {
+  border-top: 2px solid $color-gris !important;
+}
+
+// Main table container styling
+.mat-mdc-table {
+
+  overflow: hidden !important;
+  box-shadow: none !important;
+  border: none !important;
+  table-layout: fixed !important;
+}
+
+.mat-mdc-header-cell {
+  color: $color-gris !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  text-align: left !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  
+
+  // First header cell (left border radius)
+  &:first-child {
+    border-top-left-radius: 20px !important;
+  }
+
+  // Last header cell (right border radius)
+  &:last-child {
+    border-top-right-radius: 20px !important;
+  }
+}
+
+// Row and cell styling
+.mat-mdc-row {
+
+  &:hover {
+    background-color: #f8f9fa !important;
+
+    td {
+      background-color: #f8f9fa !important;
+    }
+
+    // Aplicar hover también a los elementos de acciones
+    .actions-container {
+      background-color: #f8f9fa !important;
+    }
+
+    .action-trigger {
+      background-color: #f8f9fa !important;
+    }
+  }
+
+  // Last row styling for bottom border radius
+  &:last-child {
+    .mat-mdc-cell {
+      border-bottom: none !important;
+
+      &:first-child {
+        border-bottom-left-radius: 20px !important;
+       
+      }
+
+      &:last-child {
+        border-bottom-right-radius: 20px !important;
+      }
+    }
+  }
+}
+
+.mat-mdc-cell {
+  color: #000000 !important;
+  border-bottom: 3px solid $color-azul-claro  !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  padding: 5px 8px !important;
+  text-align: left !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+// General table sizing and color enforcement
+table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: none !important;
+}
+
+.mdc-data-table__row {
+ border-bottom: 3px solid $color-azul-claro  !important;
+}
+
+.mdc-data-table__cell {
+ border-bottom: 3px solid $color-azul-claro  !important;
+  text-align: left !important;
+}
+
+.mdc-data-table__header-cell {
+ border-bottom: 3px solid $color-azul-claro  !important;
+  text-align: left !important;
+}
+
+.data-row{
+  padding: 1rem !important;
+}
+.mdc-data-table__cell, .mdc-data-table__header-cell {
+    padding: 0 !important;
+}
