@@ -1,10 +1,17 @@
 <div class="input-wrapper">
-   <img *ngIf="icon" [src]="iconPath" alt="icono" class="input-icon" />
+  <!-- Material Icon -->
+  <span *ngIf="icon && isMaterialIcon" class="material-symbols-outlined input-icon">
+    {{ icon }}
+  </span>
+  <!-- SVG Icon -->
+  <img *ngIf="icon && !isMaterialIcon" [src]="iconPath" alt="icono" class="input-icon" />
+
   <input
     [type]="type"
     [placeholder]="placeholder"
     [name]="name"
     [value]="value"
     [disabled]="disabled"
+    (input)="onInput($event)"
   />
 </div>

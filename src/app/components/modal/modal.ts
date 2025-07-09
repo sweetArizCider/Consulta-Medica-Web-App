@@ -3,22 +3,22 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ModalData } from './modal.model';
 import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { ButtonComponent } from '../../layouts/button/button.component';
+import { InputComponent } from '../../layouts/input/input.component';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.html',
   styleUrls: ['./modal.scss'],
-  standalone: true, // This was missing
+  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule
+    ButtonComponent,
+    InputComponent,
+    MatIconButton
   ]
 })
 export class ModalComponent {
@@ -29,14 +29,11 @@ export class ModalComponent {
     public dialogRef: MatDialogRef<ModalComponent>,
     @Inject(MAT_DIALOG_DATA) public injectedData: ModalData
   ) {
-    // Set default values for button text
     this.data = {
       ...injectedData,
-      confirmButtonText: injectedData.confirmButtonText || 'Confirm',
-      cancelButtonText: injectedData.cancelButtonText || 'Cancel',
+      confirmButtonText: injectedData.confirmButtonText || 'Aceptar',
     };
 
-    // Initialize the form
     const formGroup: { [key: string]: FormControl } = {};
     this.data.fields.forEach(field => {
       formGroup[field.name] = new FormControl(field.initialValue || '', field.validators || []);
@@ -44,8 +41,12 @@ export class ModalComponent {
     this.modalForm = new FormGroup(formGroup);
   }
 
+  onInputChange(fieldName: string, event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.modalForm.get(fieldName)?.setValue(target.value);
+  }
+
   onConfirm(): void {
-    // Only close and return data if the form is valid
     if (this.modalForm.valid) {
       this.dialogRef.close(this.modalForm.value);
     }

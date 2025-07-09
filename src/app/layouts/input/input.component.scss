@@ -9,14 +9,24 @@
   color: $color-gris;
   font-size: 1rem;
   font-family: 'Open Sans';
-  font-weight: 600;
-  margin: .5rem;
+  font-weight: 545;
+  margin: 0;
 
   .input-icon {
-    margin-right: 5px;
-    width: 20px;
-    height: 20px;
-    object-fit: contain; 
+    margin-right: 10px; // Increased margin for bigger icons
+    width: 28px; // Increased from 20px
+    height: 28px; // Increased from 20px
+    object-fit: contain;
+    color: $color-gris;
+
+    &.material-symbols-outlined {
+      font-size: 28px; // Increased from 20px
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 28; // Updated to match font-size
+    }
   }
 
   input {
@@ -25,9 +35,8 @@
     outline: none;
     flex: 1;
     font-size: 1rem;
+    font-weight: 545;
     color: $color-gris;
-   
-    
 
     &::placeholder {
       color: $color-gris;
@@ -39,4 +48,3 @@
     }
   }
 }
-

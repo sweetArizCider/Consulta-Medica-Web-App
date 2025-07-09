@@ -2,10 +2,15 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ModalService } from '@components/modal/modal.service';
 import { ModalData } from '@components/modal/modal.model';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-my-feature',
-  template: `<button mat-raised-button (click)="openCustomModal()">Open Modal</button>`
+  imports: [
+    MatButton
+  ],
+  template: `
+    <button mat-raised-button (click)="openCustomModal()">Open Modal</button>`
 })
 export class MyFeatureComponent {
 
@@ -13,20 +18,38 @@ export class MyFeatureComponent {
 
   openCustomModal(): void {
     const modalData: ModalData = {
-      title: 'Create New User',
-      confirmButtonText: 'Create',
+      title: 'Añadir doctor',
+      confirmButtonText: 'Aceptar',
       fields: [
         {
-          name: 'username',
-          label: 'Username',
+          name: 'name',
+          label: 'Nombre',
+          icon: 'person',
           initialValue: '',
           validators: [Validators.required, Validators.minLength(3)]
         },
         {
           name: 'email',
-          label: 'Email Address',
+          label: 'Correo electrónico',
           type: 'email',
+          icon: 'email',
           validators: [Validators.required, Validators.email]
+        },
+        {
+          name: 'phone',
+          label: 'Teléfono',
+          type: 'text',
+          icon: 'phone',
+          initialValue: '',
+          validators: [Validators.required, Validators.pattern(/^\d{10}$/)]
+        },
+        {
+          name: 'specialty',
+          label: 'Especialidad',
+          type: 'text',
+          icon: 'stethoscope',
+          initialValue: '',
+          validators: [Validators.required]
         }
       ]
     };
@@ -36,7 +59,6 @@ export class MyFeatureComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Dialog result:', result);
-        // Handle the returned form data, e.g., call an API
       } else {
         console.log('Dialog was cancelled');
       }

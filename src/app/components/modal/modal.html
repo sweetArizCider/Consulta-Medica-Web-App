@@ -1,16 +1,29 @@
-<h2 mat-dialog-title>{{ data.title }}</h2>
+<div class="modal-container">
+  <button class="close-button" mat-icon-button (click)="onCancel()">
+    <span class="material-symbols-outlined">close</span>
+  </button>
 
-<mat-dialog-content [formGroup]="modalForm">
-  <div *ngFor="let field of data.fields" class="form-field-container">
-    <mat-form-field appearance="outline">
-      <mat-label>{{ field.label }}</mat-label>
-      <input matInput [type]="field.type || 'text'" [formControlName]="field.name">
-    </mat-form-field>
-  </div>
-</mat-dialog-content>
+  <h2 mat-dialog-title class="modal-title">{{ data.title }}</h2>
 
-<mat-dialog-actions align="end">
-  <button mat-stroked-button class="test-button">Test Button</button>
-  <button mat-button (click)="onCancel()">{{ data.cancelButtonText }}</button>
-  <button mat-raised-button color="primary" (click)="onConfirm()" [disabled]="!modalForm.valid">{{ data.confirmButtonText }}</button>
-</mat-dialog-actions>
+  <mat-dialog-content [formGroup]="modalForm" class="modal-content">
+    <div *ngFor="let field of data.fields" class="form-field-container">
+      <app-input
+        [placeholder]="field.label"
+        [type]="field.type || 'text'"
+        [name]="field.name"
+        [value]="modalForm.get(field.name)?.value || ''"
+        [icon]="field.icon || ''"
+        (input)="onInputChange(field.name, $event)">
+      </app-input>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="modal-actions">
+    <app-button
+      [text]="data.confirmButtonText || 'Aceptar'"
+      [buttonType]="'primary'"
+      [disabled]="!modalForm.valid"
+      (buttonClick)="onConfirm()">
+    </app-button>
+  </mat-dialog-actions>
+</div>
