@@ -1,10 +1,12 @@
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
+import { LoaderComponent } from './components/loader/loader';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, LoaderComponent],
   template: `
-    <router-outlet/>`,
+    <router-outlet/>
+    <app-loader></app-loader>`,
 })
 export class App {}
