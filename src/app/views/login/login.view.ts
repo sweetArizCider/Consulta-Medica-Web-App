@@ -8,7 +8,7 @@ import {InputComponent} from '../../layouts/input/input.component';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, InputComponent],
+  imports: [CommonModule],
   templateUrl: './login.view.html',
 })
 export class LoginViewComponent {

@@ -6,11 +6,11 @@ export interface ModalField {
   type?: 'text' | 'password' | 'email' | 'number';
   initialValue?: any;
   validators?: ValidatorFn[];
+  icon?: string;
 }
 
 export interface ModalData {
   title: string;
   fields: ModalField[];
   confirmButtonText?: string;
-  cancelButtonText?: string;
 }
