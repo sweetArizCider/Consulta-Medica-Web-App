@@ -1,6 +1,7 @@
-import { Component, input } from '@angular/core';
+import {Component, input, signal} from '@angular/core';
 import { ButtonComponent } from '@layouts/button/button.component'
 import { Router } from '@angular/router';
+import { logout, getCurrentUserFromToken } from '@services/auth/auth.service'
 
 @Component({
   selector: 'nav-bar',
@@ -15,17 +16,22 @@ export class NavBar {
   constructor(private router: Router) {}
 
   navItems = input<string[]>(
-    ['Home', 'Clientes', 'Doctores', 'Diagnostico', 'Farmacia', 'Recetas']
+    ['Home', 'Clientes', 'Doctores', 'Diagnóstico', 'Farmacia', 'Recetas']
   );
-  isLoggedIn = input<boolean>(false);
+  isLoggedIn = input<boolean>(true);
+  imgProfileUrl = signal<string>("");
+
+  async ngOnInit(): Promise<void> {
+    const photoUrl = await getCurrentUserFromToken();
+    this.imgProfileUrl.set(photoUrl || '');
+    console.log(photoUrl);
+  }
 
   onLoginClick() {
-    console.log("click")
     this.router.navigate(['/login']);
   }
 
   onLogoutClick() {
-    console.log("logout")
-    this.router.navigate(['/']);
+    logout();
   }
 }
