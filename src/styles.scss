@@ -21,7 +21,11 @@ html {
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 // Variables de color
 $color-azul: #72A6BB;

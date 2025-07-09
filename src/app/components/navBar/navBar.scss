@@ -1,0 +1,29 @@
+nav{
+  background-color: #72A6BB;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 5rem;
+  margin: 3rem 3rem;
+  overflow: hidden;
+  padding: 0 1rem;
+  justify-content: space-between;
+}
+
+.logo-section{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-links{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
+
