@@ -1,6 +1,7 @@
 import Router, { Request, Response } from 'express'
 import { createUser, loginUser} from '@expressControllers/users/users.controller';
 import {DEFAULT_INTERNAL_ERROR, NO_USER_PAYLOAD} from '@app/api/constants/errors/errors.constant';
+import {authMiddleware} from '@expressMiddleware/auth/auth.middleware';
 
 const router = Router()
 
@@ -49,6 +50,10 @@ router.post('/login', async (req: Request, res : Response) : Promise<void> => {
     res.status(500).json({ error: DEFAULT_INTERNAL_ERROR });
     return;
   }
+})
+
+router.options('/health',authMiddleware, (req: Request, res: Response) => {
+  res.status(200).json({ message: 'API is healthy' });
 })
 
 export default router;

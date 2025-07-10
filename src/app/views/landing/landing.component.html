@@ -8,14 +8,15 @@
         de gestión Inteligente
       </h1>
       <p>
-        Administra clientes, mejora procesos y toma decisiones basadas en datos. 
+        Administra clientes, mejora procesos y toma decisiones basadas en datos.
         Inicia sesión para acceder a tu panel personalizado y llevar el control total de tu operación.
       </p>
-      <div class="button-banner">
+      <div class="button-banner" >
         <app-button
         [text]="'Empieza ahora'"
         [buttonType]="'secondary'"
-      ></app-button>
+        (click)="navigateToRegister()"
+        ></app-button>
 
       </div>
 
