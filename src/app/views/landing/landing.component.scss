@@ -1,0 +1,108 @@
+@use '../../../styles.scss' as *;
+
+.landing-container {
+ background-color: $color-azul-claro;
+  color: $color-azul;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0; 
+}
+
+.landing-content {
+   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
+  margin-bottom: -4rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.text-section {
+  flex: 1;
+  max-width: 520px;
+  padding-right: 1.5rem;
+  margin-bottom: 4rem;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    font-family: 'Montserrat';
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  p {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-family: 'Open Sans';
+  }
+}
+
+.button-banner{
+    max-width: 200px;
+}
+
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+}
+
+.support-bar {
+  background-image: linear-gradient(to right, $color-azul 74%, $color-azul-claro 100%);
+  color: $color-blanco;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; // <-- centra horizontalmente el contenido
+  padding: .5rem 2rem;
+  min-height: 60px;
+  font-family: 'Open Sans' !important;
+  font-size: 1.2rem;
+  gap: 2rem;
+
+
+  app-button {
+    flex-shrink: 0;
+    margin: 0; // elimina margen extra
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+
+    span {
+      margin-right: 0;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    app-button {
+      width: 100%;
+    }
+  }
+}
