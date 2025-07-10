@@ -34,7 +34,7 @@ export const login = async ( userLoginPayload: UserLoginPayload ): Promise<Respo
   };
 
   try {
-    const response = await fetch('/api/users/auth', requestOptions);
+    const response = await fetch('/api/login', requestOptions);
     if( response.status === 400) {
       const errorMessage = await response.json();
       return new Error(errorMessage.error || BAD_REQUEST);
