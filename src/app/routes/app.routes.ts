@@ -2,14 +2,12 @@ import { Routes } from '@angular/router';
 import { TableTestComponent } from '@components/table/test'
 import { MyFeatureComponent } from '../components/modal/test';
 import { NavBarTest } from '../components/navBar/test';
+import { LoginView } from '@views/login/login.view';
 import { LandingComponent } from '../views/landing/landing.component';
 
 export const routes: Routes = [
-
-  { path: '', component: MyFeatureComponent} ,
+  { path: '', component: LandingComponent},
   { path: 'nav-bar', component: NavBarTest },
-  { path: 'login', component: MyFeatureComponent },
-  {path: 'home', component: LandingComponent}
-
+  { path: 'login', component: LoginView },
 ]
 
