@@ -21,13 +21,13 @@ html {
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body {
+html, body{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
   font-family: 'Roboto', sans-serif;
 }
-
 
 // Variables de color
 $color-azul: #72A6BB;

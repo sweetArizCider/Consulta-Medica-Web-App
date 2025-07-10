@@ -1,0 +1,36 @@
+
+<div class="landing-container">
+    <nav-bar></nav-bar>
+  <div class="landing-content">
+    <div class="text-section">
+      <h1>
+        Bienvenido a tu centro <br />
+        de gestión Inteligente
+      </h1>
+      <p>
+        Administra clientes, mejora procesos y toma decisiones basadas en datos. 
+        Inicia sesión para acceder a tu panel personalizado y llevar el control total de tu operación.
+      </p>
+      <div class="button-banner">
+        <app-button
+        [text]="'Empieza ahora'"
+        [buttonType]="'secondary'"
+      ></app-button>
+
+      </div>
+
+    </div>
+
+    <div class="image-section">
+      <img src="/images/img_banner.png" alt="Doctor con celular" />
+    </div>
+  </div>
+
+  <div class="support-bar">
+    <span>¿Tienes problemas técnicos? Nuestro equipo está listo para ayudarte</span>
+    <app-button
+      [text]="'Contáctanos'"
+      [buttonType]="'secondary'"
+    ></app-button>
+  </div>
+</div>
