@@ -18,7 +18,7 @@ export class NavBar {
   navItems = input<string[]>(
     ['Home', 'Clientes', 'Doctores', 'Diagnóstico', 'Farmacia', 'Recetas']
   );
-  isLoggedIn = input<boolean>(true);
+  isLoggedIn = input<boolean>(false);
   imgProfileUrl = signal<string>("");
 
   async ngOnInit(): Promise<void> {
