@@ -9,4 +9,8 @@ import {NavBar} from '../../components/navBar/navBar';
   standalone: true,
   imports: [ButtonComponent, NavBar]
 })
-export class LandingComponent {}
+export class LandingComponent {
+  navigateToRegister() {
+    window.location.href = '/register';
+  }
+}

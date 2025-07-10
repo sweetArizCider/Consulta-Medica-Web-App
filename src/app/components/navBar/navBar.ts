@@ -28,6 +28,8 @@ export class NavBar implements OnInit {
         this.imgProfileUrl.set(user.photo_profile_url || '');
       } else {
         this.isUserLoggedIn.set(false);
+        this.router.navigate(['/Home']);
+        this.imgProfileUrl.set('https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg');
       }
     } catch (error) {
       console.error('Error getting user:', error);

@@ -4,14 +4,13 @@
 .table-container {
   background-color: $color-blanco;
   border-radius: 20px;
-  max-width: 1200px;
   overflow-x: auto;
   border: none;
   transition: box-shadow 0.2s;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  margin: 2rem auto; 
+  margin: 2rem auto;
 }
 
 table {
@@ -66,14 +65,14 @@ table {
   width: auto !important;
   height: auto !important;
   min-width: auto !important;
-  
+
   &:hover {
     background: transparent !important;
   }
-  
+
   &.mat-mdc-icon-button {
     background: transparent !important;
-    
+
     &:hover {
       background: transparent !important;
     }
@@ -150,7 +149,7 @@ table {
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
-  
+
 
   // First header cell (left border radius)
   &:first-child {
@@ -190,7 +189,7 @@ table {
 
       &:first-child {
         border-bottom-left-radius: 20px !important;
-       
+
       }
 
       &:last-child {

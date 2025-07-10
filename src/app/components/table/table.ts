@@ -18,6 +18,8 @@ export interface TableColumn {
 
 export interface TableRow {
   [key: string]: any;
+  rawData?: any; // Add this explicit property
+
 }
 
 @Component({
