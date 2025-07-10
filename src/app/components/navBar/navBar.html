@@ -18,7 +18,7 @@
       <a href="/{{item}}" class="nav-link">{{ item }}</a>
     }
 
-    @if(isLoggedIn()){
+    @if(isUserLoggedIn()){
       <div class="user-info">
         <figure>
           <img src="{{imgProfileUrl()}}" alt="">

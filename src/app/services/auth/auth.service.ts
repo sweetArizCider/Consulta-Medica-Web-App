@@ -87,14 +87,10 @@ export const getCurrentUserFromToken = async () => {
   if (!token) {
     return null;
   }
-  try {
-    const payload = token.split('.')[1];
-    const decodedPayload = atob(payload);
-    const user : UserAttributes = JSON.parse(decodedPayload);
+  const payload = token.split('.')[1];
+  const decodedPayload = atob(payload);
+  const user : UserAttributes = JSON.parse(decodedPayload);
 
-    return user.photo_profile_url || null;
-  } catch (error) {
-    console.error('Error decoding token:', error);
-    return null;
-  }
+  return user || null;
+
 }

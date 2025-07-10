@@ -1,4 +1,4 @@
-import {Component, input, signal} from '@angular/core';
+import {Component, input, signal, OnInit} from '@angular/core';
 import { ButtonComponent } from '@layouts/button/button.component'
 import { Router } from '@angular/router';
 import { logout, getCurrentUserFromToken } from '@services/auth/auth.service'
@@ -11,20 +11,28 @@ import { logout, getCurrentUserFromToken } from '@services/auth/auth.service'
     ButtonComponent
   ]
 })
-
-export class NavBar {
+export class NavBar implements OnInit {
   constructor(private router: Router) {}
 
   navItems = input<string[]>(
     ['Home', 'Clientes', 'Doctores', 'Diagnóstico', 'Farmacia', 'Recetas']
   );
-  isLoggedIn = input<boolean>(false);
   imgProfileUrl = signal<string>("");
+  isUserLoggedIn = signal<boolean>(false);
 
   async ngOnInit(): Promise<void> {
-    const photoUrl = await getCurrentUserFromToken();
-    this.imgProfileUrl.set(photoUrl || '');
-    console.log(photoUrl);
+    try {
+      const user = await getCurrentUserFromToken();
+      if (user) {
+        this.isUserLoggedIn.set(true);
+        this.imgProfileUrl.set(user.photo_profile_url || '');
+      } else {
+        this.isUserLoggedIn.set(false);
+      }
+    } catch (error) {
+      console.error('Error getting user:', error);
+      this.isUserLoggedIn.set(false);
+    }
   }
 
   onLoginClick() {
@@ -33,5 +41,7 @@ export class NavBar {
 
   onLogoutClick() {
     logout();
+    this.isUserLoggedIn.set(false);
+    this.imgProfileUrl.set('');
   }
 }
