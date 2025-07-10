@@ -14,6 +14,10 @@ import { Alert } from '@components/alert/alert';
 export class LoginView {
   constructor(private alert: Alert) {}
 
+  navigateToRegister() {
+    window.location.href = '/register';
+  }
+
   async loginHandler(event: SubmitEvent) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;

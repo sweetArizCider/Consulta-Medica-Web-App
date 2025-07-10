@@ -1,0 +1,144 @@
+<main>
+  <section class="first-section">
+    <button (click)="navigateToLogin()">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <article>
+      <svg width="70" height="70" viewBox="0 0 78 79" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <rect width="70" height="70" fill="url(#pattern0_72_277)"/>
+        <defs>
+          <pattern id="pattern0_72_277" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_72_277" transform="matrix(0.004328 0 0 0.00424735 -0.374255 -0.36646)"/>
+          </pattern>
+        </defs>
+      </svg>
+      <h2>¿Ya tienes una cuenta?</h2>
+      <div class="button-container">
+        <app-button
+          [text]="'Iniciar Sesión'"
+          [buttonType]="'outline'"
+          [type]="'button'"
+          (buttonClick)="navigateToLogin()"
+        ></app-button>
+      </div>
+    </article>
+  </section>
+  <section class="register-form-container">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Alertas -->
+      @if (errorMessage) {
+        <div class="alert alert-error">
+          {{ errorMessage }}
+        </div>
+      }
+      
+      @if (successMessage) {
+        <div class="alert alert-success">
+          {{ successMessage }}
+        </div>
+      }
+
+      <h1>Crear Cuenta</h1>
+      
+      <app-input
+        [icon]="'person'"
+        [placeholder]="'Nombre'"
+        [type]="'text'"
+        [name]="'nombre'"
+        [value]="registerForm.get('nombre')?.value || ''"
+        (input)="onInputChange($event, 'nombre')"
+        [disabled]="isLoading"
+      ></app-input>
+      @if (hasFieldError('nombre')) {
+        <span class="error-message">{{ getFieldError('nombre') }}</span>
+      }
+      
+      <app-input
+        [icon]="'person'"
+        [placeholder]="'Primer apellido'"
+        [type]="'text'"
+        [name]="'primerApellido'"
+        [value]="registerForm.get('primerApellido')?.value || ''"
+        (input)="onInputChange($event, 'primerApellido')"
+        [disabled]="isLoading"
+      ></app-input>
+      @if (hasFieldError('primerApellido')) {
+        <span class="error-message">{{ getFieldError('primerApellido') }}</span>
+      }
+      
+      <app-input
+        [icon]="'person'"
+        [placeholder]="'Usuario'"
+        [type]="'text'"
+        [name]="'username'"
+        [value]="registerForm.get('username')?.value || ''"
+        (input)="onInputChange($event, 'username')"
+        [disabled]="isLoading"
+      ></app-input>
+      @if (hasFieldError('username')) {
+        <span class="error-message">{{ getFieldError('username') }}</span>
+      }
+      
+      <app-input
+        [icon]="'email'"
+        [placeholder]="'Correo Electrónico'"
+        [type]="'email'"
+        [name]="'email'"
+        [value]="registerForm.get('email')?.value || ''"
+        (input)="onInputChange($event, 'email')"
+        [disabled]="isLoading"
+      ></app-input>
+      @if (hasFieldError('email')) {
+        <span class="error-message">{{ getFieldError('email') }}</span>
+      }
+      
+      <app-input
+        [icon]="'lock'"
+        [placeholder]="'Contraseña'"
+        [type]="'password'"
+        [name]="'password'"
+        [value]="registerForm.get('password')?.value || ''"
+        (input)="onInputChange($event, 'password')"
+        [disabled]="isLoading"
+      ></app-input>
+      @if (hasFieldError('password')) {
+        <span class="error-message">{{ getFieldError('password') }}</span>
+      }
+      
+      <app-input
+        [icon]="'lock'"
+        [placeholder]="'Confirmar Contraseña'"
+        [type]="'password'"
+        [name]="'confirmPassword'"
+        [value]="registerForm.get('confirmPassword')?.value || ''"
+        (input)="onInputChange($event, 'confirmPassword')"
+        [disabled]="isLoading"
+      ></app-input>
+      @if (hasFieldError('confirmPassword')) {
+        <span class="error-message">{{ getFieldError('confirmPassword') }}</span>
+      }
+
+      <app-input
+        [icon]="'add_photo_alternate'"
+        [placeholder]="'URL Foto de Perfil (Opcional)'"
+        [type]="'url'"
+        [name]="'photo_profile_url'"
+        [value]="registerForm.get('photo_profile_url')?.value || ''"
+        (input)="onInputChange($event, 'photo_profile_url')"
+        [disabled]="isLoading"
+      ></app-input>
+
+      <app-button
+        [text]="isLoading ? 'Registrando...' : 'Continuar'"
+        [buttonType]="'primary'"
+        [type]="'submit'"
+        [disabled]="isLoading || !registerForm.valid"
+      ></app-button>
+      
+      <p class="privacy-text">
+        Al hacer clic en 'Continuar', usted acepta que sus datos personales sean utilizados de acuerdo con nuestra política de privacidad.
+      </p>
+    </form>
+  </section>
+</main>
