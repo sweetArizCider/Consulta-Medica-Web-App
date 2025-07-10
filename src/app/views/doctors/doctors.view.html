@@ -1,0 +1,29 @@
+<app-loader></app-loader>
+<main>
+
+  <nav-bar></nav-bar>
+
+  <div class="doctors-button">
+    <article class="button">
+      <app-button
+        [text]="'Añadir doctor'"
+        [buttonType]="'secondary'"
+        [type]="'button'"
+        (click)="openCreateModal()"
+      >
+        ></app-button>
+    </article>
+  </div>
+
+  <article class="table-container">
+    <div class="table">
+      <table-selector
+        [columns]="columns"
+        [rows]="tableData()"
+        [showActions]="true"
+      >
+      </table-selector>
+    </div>
+  </article>
+
+</main>
