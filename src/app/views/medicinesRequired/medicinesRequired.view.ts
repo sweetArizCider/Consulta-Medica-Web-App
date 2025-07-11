@@ -12,6 +12,7 @@ import { ModalData } from '@components/modal/modal.model';
 import { Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { getMedicines } from '@services/medicines/medicines.service';
+import { getDiagnostics } from '@services/diagnostics/diagnostics.service';
 
 @Component({
   selector: 'app-medicines-required-view',
@@ -29,26 +30,28 @@ export class MedicinesRequiredView implements OnInit {
   private loaderService = inject(LoaderService);
   private modalService = inject(ModalService);
 
-  constructor(private alert: Alert) {}
+  constructor(private alert: Alert) { }
 
   medicinesRequired = signal<any[]>([]);
-    medicines = signal<any[]>([]);
+  medicines = signal<any[]>([]);
+  diagnostics = signal<any[]>([]);
 
-  // Definición de columnas para la tabla
   columns: TableColumn[] = [
-    { key: 'espacio', header: '', width: '6dvw', sortable: false, showTriangle: false },
-    { key: 'diagnostic_id', header: 'ID Diagnóstico', width: '12dvw', sortable: true, showTriangle: true },
-    { key: 'medicine_name', header: 'Medicina', width: '18dvw', sortable: true, showTriangle: true },
-    { key: 'dosage', header: 'Dosificación', width: '15dvw', sortable: true, showTriangle: true },
-    { key: 'frequency', header: 'Frecuencia', width: '15dvw', sortable: true, showTriangle: true },
-    { key: 'duration', header: 'Duración', width: '15dvw', sortable: true, showTriangle: true }
+    { key: 'espacio', header: '', width: '1dvw', sortable: false, showTriangle: false },
+    { key: 'diagnostic_id', header: 'ID Diagnóstico', width: '10dvw', sortable: true, showTriangle: true },
+    { key: 'client_name', header: 'Cliente', width: '12dvw', sortable: true, showTriangle: true },
+    { key: 'doctor_name', header: 'Doctor', width: '12dvw', sortable: true, showTriangle: true },
+    { key: 'medicine_name', header: 'Medicina', width: '12dvw', sortable: true, showTriangle: true },
+    { key: 'dosage', header: 'Dosificación', width: '10dvw', sortable: true, showTriangle: true },
+    { key: 'frequency', header: 'Frecuencia', width: '12dvw', sortable: true, showTriangle: true },
+    { key: 'duration', header: 'Duración', width: '12dvw', sortable: true, showTriangle: true }
   ];
 
-  // Datos transformados para la tabla
   tableData = signal<TableRow[]>([]);
 
   async ngOnInit(): Promise<void> {
     await this.loadMedicines();
+    await this.loadDiagnostics();
     await this.loadMedicinesRequired();
   }
 
@@ -59,18 +62,43 @@ export class MedicinesRequiredView implements OnInit {
     }
   }
 
+  async loadDiagnostics(): Promise<void> {
+    const diagnosticsData = await getDiagnostics();
+    if (!(diagnosticsData instanceof Error)) {
+      this.diagnostics.set(diagnosticsData);
+    }
+  }
+
   async loadMedicinesRequired(): Promise<void> {
     this.loaderService.show('Cargando Medicinas Requeridas...');
     try {
       const medicinesRequiredData = await getMedicinesRequired();
+      const diagnosticsData = await getDiagnostics();
+
       if (medicinesRequiredData instanceof Error) {
-        this.alert.showError(medicinesRequiredData.message);
-        console.error('Error fetching medicines required:', medicinesRequiredData.message);
+        this.alert.showError('Error al cargar las medicinas requeridas');
         return;
       }
 
-      this.medicinesRequired.set(medicinesRequiredData);
-      this.updateTableData(medicinesRequiredData);
+      if (diagnosticsData instanceof Error) {
+        this.alert.showError('Error al cargar los diagnósticos');
+        return;
+      }
+
+      const medicinesRequiredWithDetails =
+        medicinesRequiredData.map((item: any) => {
+          const diagnosticData = diagnosticsData.find(d => d.diagnostic?.id_diagnostic === item.medicineRequired.diagnostic_id);
+          return {
+            ...item,
+            diagnostic: diagnosticData?.diagnostic || {},
+            client: diagnosticData?.client || item.client || {},
+            doctor: diagnosticData?.doctor || item.doctor || {},
+            medicine: item.medicine || {}
+          };
+        });
+
+      this.medicinesRequired.set(medicinesRequiredWithDetails);
+      this.updateTableData(medicinesRequiredWithDetails);
       this.alert.showSuccess('Medicinas requeridas cargadas exitosamente!');
     } catch (error) {
       console.error('Error fetching medicines required:', error);
@@ -79,10 +107,11 @@ export class MedicinesRequiredView implements OnInit {
       this.loaderService.hide();
     }
   }
-
-  updateTableData(medicinesRequiredData: any[]): void {
-    const transformedData = medicinesRequiredData.map(item => ({
+  updateTableData(medicinesRequiredWithDetails: any[]): void {
+    const transformedData = medicinesRequiredWithDetails.map(item => ({
       diagnostic_id: item.medicineRequired?.diagnostic_id?.toString() || 'Sin ID',
+      client_name: item.client?.name || 'Sin cliente',
+      doctor_name: item.doctor?.name || 'Sin doctor',
       medicine_name: item.medicine?.name || 'Sin medicina',
       dosage: item.medicineRequired?.dosage || 'Sin dosificación',
       frequency: item.medicineRequired?.frequency || 'Sin frecuencia',
@@ -99,9 +128,13 @@ export class MedicinesRequiredView implements OnInit {
       fields: [
         {
           name: 'diagnostic_id',
-          label: 'ID Diagnóstico',
-          type: 'number',
+          label: 'Diagnóstico',
+          type: 'select',
           icon: 'assignment',
+          options: this.diagnostics().map(d => ({
+            label: `ID: ${d.diagnostic?.id_diagnostic || 'N/A'} - ${d.client?.name || 'Sin cliente'} - Dr. ${d.doctor?.name || 'Sin doctor'}`,
+            value: d.diagnostic?.id_diagnostic || 0
+          })),
           initialValue: '',
           validators: [Validators.required, Validators.min(1)]
         },
@@ -261,7 +294,8 @@ export class MedicinesRequiredView implements OnInit {
       this.loaderService.hide();
     }
   }
-        onEdit(row: TableRow) {
+
+  onEdit(row: TableRow) {
     this.openEditModal(row.rawData);
   }
 }

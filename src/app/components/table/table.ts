@@ -13,12 +13,12 @@ export interface TableColumn {
   type?: 'text' | 'number' | 'date';
   width?: string | number;
   sortable?: boolean;
-  showTriangle?: boolean; // <-- nueva propiedad
+  showTriangle?: boolean; 
 }
 
 export interface TableRow {
   [key: string]: any;
-  rawData?: any; // Add this explicit property
+  rawData?: any; 
 
 }
 
