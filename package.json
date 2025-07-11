@@ -21,6 +21,7 @@
     "@angular/platform-server": "^20.0.0",
     "@angular/router": "^20.0.0",
     "@angular/ssr": "^20.0.3",
+    "@netlify/angular-runtime": "^2.4.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.5.0",
