@@ -38,11 +38,12 @@ export class DiagnosticsView implements OnInit {
 
   // Definición de columnas para la tabla
   columns: TableColumn[] = [
-    { key: 'espacio', header: '', width: '6dvw', sortable: false, showTriangle: false },
-    { key: 'client_name', header: 'Cliente', width: '18dvw', sortable: true, showTriangle: true },
-    { key: 'doctor_name', header: 'Doctor', width: '18dvw', sortable: true, showTriangle: true },
-    { key: 'diagnosis_date', header: 'Fecha', width: '15dvw', sortable: true, showTriangle: true },
-    { key: 'description', header: 'Descripción', width: '25dvw', sortable: true, showTriangle: true }
+    { key: 'espacios', header: '', width: '2dvw', sortable: false, showTriangle: false },
+    { key: 'espacio', header: 'ID', width: '5dvw', sortable: false, showTriangle: false },
+    { key: 'client_name', header: 'Cliente', width: '17dvw', sortable: true, showTriangle: true },
+    { key: 'doctor_name', header: 'Doctor', width: '17dvw', sortable: true, showTriangle: true },
+    { key: 'diagnosis_date', header: 'Fecha', width: '14dvw', sortable: true, showTriangle: true },
+    { key: 'description', header: 'Descripción', width: '24dvw', sortable: true, showTriangle: true }
   ];
 
   // Datos transformados para la tabla
@@ -91,6 +92,7 @@ export class DiagnosticsView implements OnInit {
 
   updateTableData(diagnosticsData: any[]): void {
     const transformedData = diagnosticsData.map(item => ({
+      espacio: item.diagnostic?.id_diagnostic || '',
       client_name: item.client?.name || 'Sin cliente',
       doctor_name: item.doctor?.name || 'Sin doctor',
       diagnosis_date: item.diagnostic?.diagnosis_date ? new Date(item.diagnostic.diagnosis_date).toLocaleDateString() : 'Sin fecha',
