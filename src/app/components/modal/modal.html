@@ -7,12 +7,24 @@
 
   <mat-dialog-content [formGroup]="modalForm" class="modal-content">
     <div *ngFor="let field of data.fields" class="form-field-container">
+      <!-- Si es select, renderiza select -->
       <app-input
+        *ngIf="field.type !== 'select'"
         [placeholder]="field.label"
         [type]="field.type || 'text'"
         [name]="field.name"
         [value]="modalForm.get(field.name)?.value || ''"
         [icon]="field.icon || ''"
+        (input)="onInputChange(field.name, $event)">
+      </app-input>
+      <app-input
+        *ngIf="field.type === 'select'"
+        [placeholder]="field.label"
+        [type]="field.type"
+        [name]="field.name"
+        [value]="modalForm.get(field.name)?.value || ''"
+        [icon]="field.icon || ''"
+        [options]="field.options || []"
         (input)="onInputChange(field.name, $event)">
       </app-input>
     </div>

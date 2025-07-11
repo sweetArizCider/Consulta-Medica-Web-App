@@ -11,6 +11,7 @@ import { ModalService } from '@components/modal/modal.service';
 import { ModalData } from '@components/modal/modal.model';
 import { Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
+import { getMedicines } from '@services/medicines/medicines.service';
 
 @Component({
   selector: 'app-medicines-required-view',
@@ -31,6 +32,7 @@ export class MedicinesRequiredView implements OnInit {
   constructor(private alert: Alert) {}
 
   medicinesRequired = signal<any[]>([]);
+    medicines = signal<any[]>([]);
 
   // Definición de columnas para la tabla
   columns: TableColumn[] = [
@@ -46,7 +48,15 @@ export class MedicinesRequiredView implements OnInit {
   tableData = signal<TableRow[]>([]);
 
   async ngOnInit(): Promise<void> {
+    await this.loadMedicines();
     await this.loadMedicinesRequired();
+  }
+
+  async loadMedicines(): Promise<void> {
+    const medicinesData = await getMedicines();
+    if (!(medicinesData instanceof Error)) {
+      this.medicines.set(medicinesData);
+    }
   }
 
   async loadMedicinesRequired(): Promise<void> {
@@ -97,10 +107,12 @@ export class MedicinesRequiredView implements OnInit {
         },
         {
           name: 'medicine_id',
-          label: 'ID Medicina',
-          type: 'number',
+          label: 'Medicina',
+          type: 'select',
           icon: 'medication',
-          validators: [Validators.required, Validators.min(1)]
+          options: this.medicines().map(m => ({ label: m.name, value: m.id_medicine })),
+          initialValue: '',
+          validators: [Validators.required]
         },
         {
           name: 'dosage',
@@ -151,11 +163,12 @@ export class MedicinesRequiredView implements OnInit {
         },
         {
           name: 'medicine_id',
-          label: 'ID Medicina',
-          type: 'number',
+          label: 'Medicina',
+          type: 'select',
           icon: 'medication',
+          options: this.medicines().map(m => ({ label: m.name, value: m.id_medicine })),
           initialValue: medicineRequired.medicine_id.toString(),
-          validators: [Validators.required, Validators.min(1)]
+          validators: [Validators.required]
         },
         {
           name: 'dosage',
@@ -247,5 +260,8 @@ export class MedicinesRequiredView implements OnInit {
     } finally {
       this.loaderService.hide();
     }
+  }
+        onEdit(row: TableRow) {
+    this.openEditModal(row.rawData);
   }
 }

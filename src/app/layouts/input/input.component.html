@@ -1,12 +1,13 @@
 <div class="input-wrapper">
-  <!-- Material Icon -->
+  <!-- Iconos igual que antes -->
   <span *ngIf="icon && isMaterialIcon" class="material-symbols-outlined input-icon">
     {{ icon }}
   </span>
-  <!-- SVG Icon -->
   <img *ngIf="icon && !isMaterialIcon" [src]="iconPath" alt="icono" class="input-icon" />
 
+  <!-- Input normal -->
   <input
+    *ngIf="type !== 'select'"
     [type]="type"
     [placeholder]="placeholder"
     [name]="name"
@@ -14,4 +15,16 @@
     [disabled]="disabled"
     (input)="onInput($event)"
   />
+
+  <!-- Select para listas -->
+  <select
+    *ngIf="type === 'select'"
+    [name]="name"
+    [disabled]="disabled"
+    (change)="onInput($event)"
+    [value]="value"
+  >
+    <option value="" disabled selected>{{ placeholder }}</option>
+    <option *ngFor="let opt of options" [value]="opt.value">{{ opt.label }}</option>
+  </select>
 </div>

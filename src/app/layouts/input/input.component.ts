@@ -15,6 +15,7 @@ export class InputComponent {
   @Input() name: string = '';
   @Input() value: string = '';
   @Input() disabled: boolean = false;
+  @Input() options: { label: string; value: string | number }[] = [];
   @Output() input = new EventEmitter<Event>();
 
   get iconPath(): string {

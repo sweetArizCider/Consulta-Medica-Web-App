@@ -21,7 +21,7 @@
         [columns]="columns"
         [rows]="tableData()"
         [showActions]="true"
-      >
+        (editRow)="onEdit($event)">
       </table-selector>
     </div>
   </article>

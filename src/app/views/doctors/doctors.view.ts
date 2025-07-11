@@ -236,4 +236,7 @@ export class DoctorsView implements OnInit {
       this.loaderService.hide();
     }
   }
+    onEdit(row: TableRow) {
+    this.openEditModal(row.rawData);
+  }
 }
