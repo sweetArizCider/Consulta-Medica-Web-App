@@ -13,19 +13,19 @@
   margin: 0;
 
   .input-icon {
-    margin-right: 10px; // Increased margin for bigger icons
-    width: 28px; // Increased from 20px
-    height: 28px; // Increased from 20px
+    margin-right: 10px; 
+    width: 28px; 
+    height: 28px; 
     object-fit: contain;
     color: $color-gris;
 
     &.material-symbols-outlined {
-      font-size: 28px; // Increased from 20px
+      font-size: 28px; 
       font-variation-settings:
         'FILL' 0,
         'wght' 400,
         'GRAD' 0,
-        'opsz' 28; // Updated to match font-size
+        'opsz' 28;
     }
   }
 

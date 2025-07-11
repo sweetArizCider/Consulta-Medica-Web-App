@@ -36,7 +36,6 @@ export class DiagnosticsView implements OnInit {
   clients = signal<any[]>([]);
   doctors = signal<any[]>([]);
 
-  // Definición de columnas para la tabla
   columns: TableColumn[] = [
     { key: 'espacios', header: '', width: '2dvw', sortable: false, showTriangle: false },
     { key: 'espacio', header: 'ID', width: '5dvw', sortable: false, showTriangle: false },

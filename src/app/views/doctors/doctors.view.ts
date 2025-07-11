@@ -33,7 +33,6 @@ export class DoctorsView implements OnInit {
 
   doctors = signal<doctorsModel[]>([]);
 
-  // Definición de columnas para la tabla
   columns: TableColumn[] = [
     { key: 'espacio', header: '', width: '6dvw', sortable: false, showTriangle: false },
     { key: 'name', header: 'Nombre', width: '15dvw', sortable: true, showTriangle: true },

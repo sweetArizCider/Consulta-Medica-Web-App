@@ -96,3 +96,34 @@ export const updateDiagnostic = async (id: number, diagnosticPayload: Diagnostic
     return new Error(DEFAULT_INTERNAL_ERROR);
   }
 }
+
+export const getDiagnosticById = async(id: number) : Promise<any | Error> => {
+  const headers = getAuthHeaders();
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  };
+
+  try {
+    const response = await fetch(`${DIAGNOSTICS_API_URL}?id=${id}`, requestOptions);
+
+    if (response.status === 404) {
+      return new Error('Diagnostic not found');
+    }
+    if (response.status === 400) {
+      return new Error('Invalid diagnostic ID');
+    }
+    if (response.status === 401) {
+      return new Error(UNAUTHORIZED);
+    }
+    if (response.status === 500) {
+      return new Error(DEFAULT_INTERNAL_ERROR);
+    }
+
+    const result = await response.json();
+    return result.data || result;
+  } catch (error) {
+    console.error('Error fetching diagnostic by ID:', error);
+    return new Error(DEFAULT_INTERNAL_ERROR);
+  }
+}

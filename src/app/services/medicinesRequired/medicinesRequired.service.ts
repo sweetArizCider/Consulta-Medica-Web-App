@@ -1,6 +1,7 @@
 import { getAuthHeaders } from '@services/auth/auth.service';
 import {BAD_REQUEST, DEFAULT_INTERNAL_ERROR, UNAUTHORIZED} from '@app/api/constants/errors/errors.constant';
 import {MedicineRequiredPayload} from '@expressModels/medicinesRequired/medicinesRequired';
+import { getDiagnosticById } from '../diagnostics/diagnostics.service';
 
 const MEDICINES_REQUIRED_API_URL = '/api/medicinesRequired';
 
@@ -94,4 +95,6 @@ export const updateMedicineRequired = async (id: number, medicineRequiredPayload
     console.error('Error updating medicine required:', error);
     return new Error(DEFAULT_INTERNAL_ERROR);
   }
+
+
 }

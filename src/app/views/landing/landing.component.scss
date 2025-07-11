@@ -78,7 +78,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center; // <-- centra horizontalmente el contenido
+  justify-content: center; 
   padding: .5rem 2rem;
   min-height: 60px;
   font-family: 'Open Sans' !important;
@@ -88,7 +88,7 @@
 
   app-button {
     flex-shrink: 0;
-    margin: 0; // elimina margen extra
+    margin: 0;
   }
 
   @media (max-width: 768px) {
