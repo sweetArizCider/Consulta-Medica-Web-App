@@ -236,4 +236,8 @@ export class ClientsView implements OnInit {
       this.loaderService.hide();
     }
   }
+
+  onEdit(row: TableRow) {
+    this.openEditModal(row.rawData);
+  }
 }

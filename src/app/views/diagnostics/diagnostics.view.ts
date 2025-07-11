@@ -11,6 +11,8 @@ import { ModalService } from '@components/modal/modal.service';
 import { ModalData } from '@components/modal/modal.model';
 import { Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
+import { getClients } from '@services/clients/clients.service';
+import { getDoctors } from '@services/doctors/doctors.service';
 
 @Component({
   selector: 'app-diagnostics-view',
@@ -31,21 +33,40 @@ export class DiagnosticsView implements OnInit {
   constructor(private alert: Alert) {}
 
   diagnostics = signal<any[]>([]);
+  clients = signal<any[]>([]);
+  doctors = signal<any[]>([]);
 
   // Definición de columnas para la tabla
   columns: TableColumn[] = [
-    { key: 'espacio', header: '', width: '6dvw', sortable: false, showTriangle: false },
-    { key: 'client_name', header: 'Cliente', width: '18dvw', sortable: true, showTriangle: true },
-    { key: 'doctor_name', header: 'Doctor', width: '18dvw', sortable: true, showTriangle: true },
-    { key: 'diagnosis_date', header: 'Fecha', width: '15dvw', sortable: true, showTriangle: true },
-    { key: 'description', header: 'Descripción', width: '25dvw', sortable: true, showTriangle: true }
+    { key: 'espacios', header: '', width: '2dvw', sortable: false, showTriangle: false },
+    { key: 'espacio', header: 'ID', width: '5dvw', sortable: false, showTriangle: false },
+    { key: 'client_name', header: 'Cliente', width: '17dvw', sortable: true, showTriangle: true },
+    { key: 'doctor_name', header: 'Doctor', width: '17dvw', sortable: true, showTriangle: true },
+    { key: 'diagnosis_date', header: 'Fecha', width: '14dvw', sortable: true, showTriangle: true },
+    { key: 'description', header: 'Descripción', width: '24dvw', sortable: true, showTriangle: true }
   ];
 
   // Datos transformados para la tabla
   tableData = signal<TableRow[]>([]);
 
   async ngOnInit(): Promise<void> {
+    await this.loadClients();
+    await this.loadDoctors();
     await this.loadDiagnostics();
+  }
+
+  async loadClients(): Promise<void> {
+    const clientsData = await getClients();
+    if (!(clientsData instanceof Error)) {
+      this.clients.set(clientsData);
+    }
+  }
+
+  async loadDoctors(): Promise<void> {
+    const doctorsData = await getDoctors();
+    if (!(doctorsData instanceof Error)) {
+      this.doctors.set(doctorsData);
+    }
   }
 
   async loadDiagnostics(): Promise<void> {
@@ -71,6 +92,7 @@ export class DiagnosticsView implements OnInit {
 
   updateTableData(diagnosticsData: any[]): void {
     const transformedData = diagnosticsData.map(item => ({
+      espacio: item.diagnostic?.id_diagnostic || '',
       client_name: item.client?.name || 'Sin cliente',
       doctor_name: item.doctor?.name || 'Sin doctor',
       diagnosis_date: item.diagnostic?.diagnosis_date ? new Date(item.diagnostic.diagnosis_date).toLocaleDateString() : 'Sin fecha',
@@ -85,21 +107,24 @@ export class DiagnosticsView implements OnInit {
       title: 'Añadir diagnóstico',
       confirmButtonText: 'Guardar',
       fields: [
-        {
-          name: 'client_id',
-          label: 'ID Cliente',
-          type: 'number',
-          icon: 'person',
-          initialValue: '',
-          validators: [Validators.required, Validators.min(1)]
-        },
-        {
-          name: 'doctor_id',
-          label: 'ID Doctor',
-          type: 'number',
-          icon: 'local_hospital',
-          validators: [Validators.required, Validators.min(1)]
-        },
+         {
+    name: 'client_id',
+    label: 'Cliente',
+    type: 'select',
+    icon: 'person',
+    options: this.clients().map(c => ({ label: c.name, value: c.id_client })),
+    initialValue: '',
+    validators: [Validators.required]
+  },
+  {
+    name: 'doctor_id',
+    label: 'Doctor',
+    type: 'select',
+    icon: 'local_hospital',
+    options: this.doctors().map(d => ({ label: d.name, value: d.id_doctor })),
+    initialValue:  '',
+    validators: [Validators.required]
+  },
         {
           name: 'diagnosis_date',
           label: 'Fecha de Diagnóstico',
@@ -143,8 +168,10 @@ export class DiagnosticsView implements OnInit {
         {
           name: 'doctor_id',
           label: 'ID Doctor',
-          type: 'number',
+          type: 'select',
           icon: 'local_hospital',
+                  options: this.doctors().map(d => ({ label: d.name, value: d.id_doctor })),
+          
           initialValue: diagnostic.doctor_id.toString(),
           validators: [Validators.required, Validators.min(1)]
         },
@@ -175,6 +202,7 @@ export class DiagnosticsView implements OnInit {
       }
     });
   }
+
 
   async handleCreateDiagnostic(formData: any): Promise<void> {
     this.loaderService.show('Creando diagnóstico...');
@@ -228,5 +256,9 @@ export class DiagnosticsView implements OnInit {
     } finally {
       this.loaderService.hide();
     }
+  }
+
+  onEdit(row: TableRow) {
+    this.openEditModal(row.rawData);
   }
 }

@@ -44,7 +44,6 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() headerHeight?: string | number;
 
   @Output() editRow = new EventEmitter<TableRow>();
-  @Output() deleteRow = new EventEmitter<TableRow>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -98,7 +97,5 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
     this.editRow.emit(row);
   }
 
-  onDelete(row: TableRow) {
-    this.deleteRow.emit(row);
-  }
+
 }
