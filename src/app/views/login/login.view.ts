@@ -48,7 +48,7 @@ export class LoginView {
         if (loginResponse && loginResponse.token) {
           this.loaderService.updateMessage('Guardando sesión...');
           saveTokenToLocalStorage(loginResponse.token);
-          this.alert.showSuccess('Login successful!');
+          this.alert.showSuccess('Logeado correctamente!');
           this.loaderService.updateMessage('Redirigiendo...');
           setTimeout(() => {
             window.location.href = '/';
@@ -59,7 +59,7 @@ export class LoginView {
       }
     } catch (error) {
       console.error('Login failed:', error);
-      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred during login.';
+      const errorMessage = error instanceof Error ? error.message : 'Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.';
       this.alert.showError(`Login failed: ${errorMessage}`);
     } finally {
       // Ocultar loader

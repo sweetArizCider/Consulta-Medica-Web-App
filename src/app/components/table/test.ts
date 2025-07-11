@@ -14,7 +14,7 @@ import { TableComponent, TableColumn, TableRow } from './table';
         [rows]="data"
         [showActions]="true"
         (editRow)="onEdit($event)"
-        (deleteRow)="onDelete($event)">
+        >
       </table-selector>
     </div>
   `
@@ -80,7 +80,4 @@ columns: TableColumn[] = [
     console.log('Editando doctor:', row);
   }
 
-  onDelete(row: TableRow) {
-    console.log('Eliminando doctor:', row);
-  }
 }
